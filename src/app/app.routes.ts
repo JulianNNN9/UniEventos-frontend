@@ -7,8 +7,8 @@ import { CrearEventoComponent } from './componentes/crear-evento/crear-evento.co
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
-   { path: '/api/publico/iniciar-sesion', component: LoginComponent },
-   { path: '/api/publico//crear-usuario', component: RegistroComponent },
-   { path: '/api/admin/eventos/crear-evento', component: CrearEventoComponent}
+   { path: 'login', component: LoginComponent },
+   { path: 'registro', component: RegistroComponent },
+   { path: 'eventos/crear-evento', component: CrearEventoComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];
