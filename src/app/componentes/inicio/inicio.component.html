@@ -1,1 +1,84 @@
-<p>Pagina inicio</p>
+<div id="carouselExample" class="carousel slide p-4" style="max-width: 63.5%; margin: auto;">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://picsum.photos/200/100?random=1" class="d-block w-100" style="max-height: 500px;" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="text-light">Texto llamativo para el primer slide</h5>
+          <p class="text-light">Descripción breve y llamativa para captar la atención</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://picsum.photos/200/100?random=2" class="d-block w-100" style="max-height: 500px;" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="text-light">Texto llamativo para el segundo slide</h5>
+          <p class="text-light">Otra descripción atractiva que acompaña la imagen</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://picsum.photos/200/100?random=3" class="d-block w-100" style="max-height: 500px;" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="text-light">Texto llamativo para el tercer slide</h5>
+          <p class="text-light">Mensaje final con una frase cautivadora</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="top: 50%; transform: translateY(-50%);">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style="top: 50%; transform: translateY(-50%);">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  
+  <div class="container mb-4">
+    <div class="p-4 border rounded">
+      <div class="row">
+        <div class="col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre"
+            [(ngModel)]="filtros.nombre"
+          />
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filtros.tipo">
+            <option value="">Seleccionar tipo</option>
+            <option *ngFor="let tipo of tiposDeEvento" [value]="tipo">{{ tipo }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ciudad"
+            [(ngModel)]="filtros.ciudad"
+          />
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary w-100" (click)="buscarEventos()">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-3 mb-4" *ngFor="let evento of eventos">
+      <div class="card" style="width: 18rem;">
+        <img [src]="evento.imagenPortada" class="card-img-top" [alt]="evento.nombre">
+        <div class="card-body">
+          <h5 class="card-title">{{ evento.nombre }}</h5>
+          <p class="card-text">{{ evento.descripcion }}</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
@@ -27,7 +28,7 @@ export class RegistroComponent {
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(24),
-        //Validators.pattern('^[A-Z](.*[!@#$%^&*])$')
+        Validators.pattern('^[A-Z](.*[!@#$%^&*])$')
       ]]
     });
   }

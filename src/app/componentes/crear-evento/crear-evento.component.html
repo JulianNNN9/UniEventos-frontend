@@ -1,45 +1,45 @@
-<div class="container">
-  <div class="card">
-    <div class="card-header p-4">
-      <h5 class="mb-0">
-        <i class="fa-solid fa-calendar-plus me-3"></i>Crear Nuevo Evento
-      </h5>
-    </div>
-    <div class="card-body p-4">
-      <form [formGroup]="crearEventoForm" (ngSubmit)="crearEvento()">
-        <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre del Evento</label>
-          <input type="text" id="nombre" class="form-control" formControlName="nombre">
-        </div>
-        <div class="mb-3">
-          <label for="descripcion" class="form-label">Descripción</label>
-          <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="tipo" class="form-label">Tipo de Evento</label>
-          <select id="tipo" class="form-control" formControlName="tipo">
-            <option value="">Seleccione un tipo</option>
-            @for (item of tiposDeEvento; track $index) {
-                <option value="{{item}}">{{item}}</option>}          </select>
-        </div>
-        <div class="mb-3">
-          <label for="direccion" class="form-label">Dirección</label>
-          <input type="text" id="direccion" class="form-control" formControlName="direccion">
-        </div>
-        <div class="mb-3">
-          <label for="ciudad" class="form-label">Ciudad</label>
-          <input type="text" id="ciudad" class="form-control" formControlName="ciudad">
-        </div>
-        <div class="mb-3">
-          <label for="imagenPortada" class="form-label">Imagen de Portada</label>
-          <input type="file" id="imagenPortada" class="form-control" (change)="onFileChange($event, 'portada')">
-        </div>
-        <div class="mb-3">
-          <label for="imagenLocalidades" class="form-label">Imagen de Localidades</label>
-          <input type="file" id="imagenLocalidades" class="form-control" (change)="onFileChange($event, 'localidades')">
-        </div>
-        <button type="submit" class="btn btn-primary">Crear Evento</button>
-      </form>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card" style="width: 50%;">
+      <div class="card-header p-4">
+        <h5 class="mb-0">
+          <i class="fa-solid fa-calendar-plus me-3"></i>Crear Nuevo Evento
+        </h5>
+      </div>
+      <div class="card-body p-4">
+        <form [formGroup]="crearEventoForm" (ngSubmit)="crearEvento()">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre del Evento</label>
+            <input type="text" id="nombre" class="form-control" formControlName="nombre">
+          </div>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo de Evento</label>
+            <select id="tipo" class="form-control" formControlName="tipo">
+              <option value="">Seleccione un tipo</option>
+              @for (item of tiposDeEvento; track $index) {
+                  <option value="{{item}}">{{item}}</option>}          </select>
+          </div>
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" id="direccion" class="form-control" formControlName="direccion">
+          </div>
+          <div class="mb-3">
+            <label for="ciudad" class="form-label">Ciudad</label>
+            <input type="text" id="ciudad" class="form-control" formControlName="ciudad">
+          </div>
+          <div class="mb-3">
+            <label for="imagenPortada" class="form-label">Imagen de Portada</label>
+            <input type="file" id="imagenPortada" class="form-control" (change)="onFileChange($event, 'portada')">
+          </div>
+          <div class="mb-3">
+            <label for="imagenLocalidades" class="form-label">Imagen de Localidades</label>
+            <input type="file" id="imagenLocalidades" class="form-control" (change)="onFileChange($event, 'localidades')">
+          </div>
+          <button type="submit" class="btn btn-primary">Crear Evento</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
