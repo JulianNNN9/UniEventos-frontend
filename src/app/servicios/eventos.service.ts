@@ -99,6 +99,78 @@ export class EventosService {
     imagenLocalidades:'https://picsum.photos/100',
     estado:'Activo'
   });
+
+  this.eventos.push({
+    id:'4',
+    nombre:'Evento 4',
+    descripcion:'Descripcion del evento 3',
+    fecha:new Date(),
+    tipo:'Deportivo',
+    direccion:'Calle 123',
+    ciudad:'Bogota',
+    localidades:[],
+    imagenPortada:'https://picsum.photos/100?random=4',
+    imagenLocalidades:'https://picsum.photos/100',
+    estado:'Activo'
+  });
+
+  this.eventos.push({
+    id:'5',
+    nombre:'Evento 5',
+    descripcion:'Descripcion del evento 3',
+    fecha:new Date(),
+    tipo:'Deportivo',
+    direccion:'Calle 123',
+    ciudad:'Bogota',
+    localidades:[],
+    imagenPortada:'https://picsum.photos/100?random=5',
+    imagenLocalidades:'https://picsum.photos/100',
+    estado:'Activo'
+  });
+
+  this.eventos.push({
+    id:'6',
+    nombre:'Evento 6',
+    descripcion:'Descripcion del evento 3',
+    fecha:new Date(),
+    tipo:'Deportivo',
+    direccion:'Calle 123',
+    ciudad:'Bogota',
+    localidades:[],
+    imagenPortada:'https://picsum.photos/100?random=6',
+    imagenLocalidades:'https://picsum.photos/100',
+    estado:'Activo'
+  });
+
+  this.eventos.push({
+    id:'7',
+    nombre:'Evento 7',
+    descripcion:'Descripcion del evento 3',
+    fecha:new Date(),
+    tipo:'Deportivo',
+    direccion:'Calle 123',
+    ciudad:'Bogota',
+    localidades:[],
+    imagenPortada:'https://picsum.photos/100?random=7',
+    imagenLocalidades:'https://picsum.photos/100',
+    estado:'Activo'
+  });
+
+  this.eventos.push({
+    id:'8',
+    nombre:'Evento 8',
+    descripcion:'Descripcion del evento 3',
+    fecha:new Date(),
+    tipo:'Deportivo',
+    direccion:'Calle 123',
+    ciudad:'Bogota',
+    localidades:[],
+    imagenPortada:'https://picsum.photos/100?random=8',
+    imagenLocalidades:'https://picsum.photos/100',
+    estado:'Activo'
+  });
+
+
  }
 
 

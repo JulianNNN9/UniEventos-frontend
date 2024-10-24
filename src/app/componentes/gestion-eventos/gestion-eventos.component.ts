@@ -21,7 +21,7 @@ export class GestionEventosComponent {
  constructor(public eventosService:EventosService) {
   this.textoBtnEliminar = "";
   this.seleccionados = [];
-   this.eventos = eventosService.listar();
+  this.eventos = eventosService.listar();
  }
 
 

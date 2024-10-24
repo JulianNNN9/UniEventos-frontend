@@ -14,18 +14,29 @@ import { CommonModule } from '@angular/common';
 })
 export class DetalleEventoComponent {
 
-
- codigoEvento: string = '';
- evento: EventoDTO | undefined;
+codigoEvento: string = '';
+ evento: EventoDTO;
 
 
  constructor(private route: ActivatedRoute, private eventosService: EventosService) {
+  this.evento = {
+    id: '',
+    nombre: '',
+    descripcion: '',
+    fecha: new Date(),
+    tipo: '',
+    direccion: '',
+    ciudad: '',
+    localidades: [],
+    imagenPortada: '',
+    imagenLocalidades: '',
+    estado: ''
+  };
    this.route.params.subscribe((params) => {
      this.codigoEvento = params['id'];
      this.obtenerEvento();
    });
  }
-
 
  public obtenerEvento() {
    const eventoConsultado = this.eventosService.obtener(this.codigoEvento);
@@ -34,5 +45,8 @@ export class DetalleEventoComponent {
    }
  }
 
+ public agregarAlCarrito(arg0: EventoDTO) {
+  throw new Error('Method not implemented.');
+ }
 
 }
