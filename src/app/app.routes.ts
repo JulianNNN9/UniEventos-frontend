@@ -5,13 +5,18 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { CrearEventoComponent } from './componentes/crear-evento/crear-evento.component';
 import { HeaderComponent } from './componentes/header/header.component';
 import { FooterComponent } from './componentes/footer/footer.component';
+import { GestionEventosComponent } from './componentes/gestion-eventos/gestion-eventos.component';
+import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-evento.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
    { path: 'login', component: LoginComponent },
    { path: 'registro', component: RegistroComponent },
-   { path: 'eventos/crear-evento', component: CrearEventoComponent},
+   { path: 'crear-evento', component: CrearEventoComponent},
    { path: 'header', component: HeaderComponent},
    { path: 'footer', component: FooterComponent},
+   { path: "gestion-eventos", component: GestionEventosComponent },
+   { path: 'detalle-evento/:id', component: DetalleEventoComponent },
+   { path: 'editar-evento/:id', component: CrearEventoComponent },
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];

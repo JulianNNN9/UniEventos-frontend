@@ -23,11 +23,11 @@ export class RegistroComponent {
       email: ['', [Validators.required, Validators.email]],
       direccion: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.maxLength(10)]],
-      password: ['', [
+      contrasena: ['', [
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(24),
-        Validators.pattern('^[A-Z](.*[!@#$%^&*])$')
+        //Validators.pattern('^[A-Z](.*[!@#$%^&*])$')
       ]]
     });
   }
@@ -40,5 +40,5 @@ export class RegistroComponent {
   get password() {
     return this.registroForm.get('password');
   }
-   
+
 }
