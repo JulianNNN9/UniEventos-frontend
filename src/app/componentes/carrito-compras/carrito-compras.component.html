@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="block-heading">
+      <h2>Carrito de Compras</h2>
+      <p>Estos son los eventos que has seleccionado para tu compra.</p>
+    </div>
+    <div class="content">
+      <div class="row">
+        <div class="col-md-12 col-lg-8">
+          <div class="items">
+            <div *ngFor="let evento of carrito" class="product">
+              <div class="row">
+                <div class="col-md-3">
+                  <img class="img-fluid mx-auto d-block image" [src]="evento.imagenPortada" alt="{{ evento.nombre }}">
+                </div>
+                <div class="col-md-9">
+                  <div class="info">
+                    <h5>{{ evento.nombre }}</h5>
+                    <p>{{ evento.descripcion }}</p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div>Tipo: <span class="value">{{ evento.tipo }}</span></div>
+                        <div>Fecha: <span class="value">{{ evento.fecha | date:'short' }}</span></div>
+                        <div>Dirección: <span class="value">{{ evento.direccion }}</span></div>
+                        <div>Ciudad: <span class="value">{{ evento.ciudad }}</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-4 fixed-summary">
+          <div class="summary">
+            <h3>Resumen</h3>
+            <div class="summary-item">
+              <span class="text">Subtotal</span>
+              <span class="price">{{ subtotal | currency }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="text">Descuento</span>
+              <span class="price">{{ descuento | currency }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="text">Envío</span>
+              <span class="price">{{ envio | currency }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="text">Total</span>
+              <span class="price">{{ total | currency }}</span>
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Código de cupón" [(ngModel)]="codigoCupon">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="validarCupon()">Validar</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="realizarPago()">Realizar Pago</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
