@@ -26,25 +26,17 @@ export class GestionEventosComponent {
 
 
  public seleccionar(evento: EventoDTO, estado: boolean) {
-
-
   if (estado) {
     this.seleccionados.push(evento);
   } else {
     this.seleccionados.splice(this.seleccionados.indexOf(evento), 1);
   }
-
-
   this.actualizarMensaje();
-
-
  }
 
 
  private actualizarMensaje() {
   const tam = this.seleccionados.length;
-
-
   if (tam != 0) {
     if (tam == 1) {
       this.textoBtnEliminar = "1 elemento";
@@ -63,11 +55,7 @@ export class GestionEventosComponent {
   });
   this.seleccionados = [];
   this.actualizarMensaje();
-
-
  }
-
-
 
  public confirmarEliminacion() {
   Swal.fire({
