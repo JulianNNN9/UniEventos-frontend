@@ -7,6 +7,7 @@ import { HeaderComponent } from './componentes/header/header.component';
 import { FooterComponent } from './componentes/footer/footer.component';
 import { GestionEventosComponent } from './componentes/gestion-eventos/gestion-eventos.component';
 import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-evento.component';
+import { CarritoComprasComponent } from './componentes/carrito-compras/carrito-compras.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
@@ -18,5 +19,6 @@ export const routes: Routes = [
    { path: "gestion-eventos", component: GestionEventosComponent },
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
    { path: 'editar-evento/:id', component: CrearEventoComponent },
+   { path: 'carrito-compras', component: CarritoComprasComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];
