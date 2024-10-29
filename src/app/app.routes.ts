@@ -8,6 +8,8 @@ import { FooterComponent } from './componentes/footer/footer.component';
 import { GestionEventosComponent } from './componentes/gestion-eventos/gestion-eventos.component';
 import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-evento.component';
 import { CarritoComprasComponent } from './componentes/carrito-compras/carrito-compras.component';
+import { AuthAdminGuard } from './guardianes/auth-admin.guard';
+import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
@@ -16,9 +18,9 @@ export const routes: Routes = [
    { path: 'crear-evento', component: CrearEventoComponent},
    { path: 'header', component: HeaderComponent},
    { path: 'footer', component: FooterComponent},
-   { path: "gestion-eventos", component: GestionEventosComponent },
+   { path: "gestion-eventos", component: GestionEventosComponent},
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
-   { path: 'editar-evento/:id', component: CrearEventoComponent },
+   { path: 'editar-evento/:id', component: CrearEventoComponent},
    { path: 'carrito-compras', component: CarritoComprasComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];

@@ -9,6 +9,8 @@ import { TokenService } from './servicios/token.service';
 import { AdminService } from './servicios/admin.service';
 import { PublicoService } from './servicios/publico.service';
 import { ClienteService } from './servicios/cliente.service';
+import { AuthAdminGuard } from './guardianes/auth-admin.guard';
+import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +21,8 @@ export const appConfig: ApplicationConfig = {
     AdminService,
     PublicoService,
     ClienteService,
-    AlertMessagesService
+    AlertMessagesService,
+    AuthAdminGuard,
+    AuthClienteGuard
   ]
 };
