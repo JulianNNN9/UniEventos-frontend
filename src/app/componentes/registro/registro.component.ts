@@ -1,45 +1,71 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import {
+  FormsModule,
+  NgForm,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PublicoService } from '../../servicios/publico.service';
+import Swal from 'sweetalert2';
+import { CrearUsuarioDTO } from '../../dto/crear-usuario-dto';
+import { AlertMessagesService } from 'jjwins-angular-alert-messages'
+import { AlertMessagesModule } from 'jjwins-angular-alert-messages';
+
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, AlertMessagesModule],
   templateUrl: './registro.component.html',
-  styleUrl: './registro.component.css'
+  styleUrl: './registro.component.css',
 })
 export class RegistroComponent {
+  
+  cliente: CrearUsuarioDTO = {
+    cedula: '',
+    nombreCompleto: '',
+    direccion: '',
+    telefono: '',
+    email: '',
+    contrasenia: ''
+  };
 
-  registroForm!: FormGroup;
+  @ViewChild("clienteForm") clienteForm: NgForm;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.crearFormulario();
+  constructor(
+    private publicoService: PublicoService,
+    private alertMessageService: AlertMessagesService
+  ) {
   }
 
-  private crearFormulario() {
-    this.registroForm = this.formBuilder.group({
-      cedula: ['', [Validators.required]],
-      nombre: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      direccion: ['', [Validators.required]],
-      telefono: ['', [Validators.required, Validators.maxLength(10)]],
-      contrasena: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(24),
-        Validators.pattern('^[A-Z](.*[!@#$%^&*])$')
-      ]]
-    });
-  }
+  public registrar(clienteForm: NgForm) {
+    const { value, valid } = clienteForm;
 
-   public registrar() {
-    console.log(this.registroForm.value);
-  }
+    if (!valid) {
+      this.alertMessageService.show('Por favor llena el formulario correctamente', 
+        { cssClass: 'alerts-error', timeOut: 3000 }
+      );
+    } else {
+      this.publicoService.crearUsuario(value).subscribe({
+        next: (data) => {
+          Swal.fire({
+            title: 'Cuenta creada',
+            text: 'La cuenta se ha creado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          });
+              },
+        error: (error) => {
 
-  // Método para obtener el error específico del campo
-  get password() {
-    return this.registroForm.get('password');
+          Swal.fire({
+            title: 'Error',
+            text: error.error.respuesta,
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+          });
+        },
+      });
+      this.clienteForm.resetForm();
+    }
   }
-
 }

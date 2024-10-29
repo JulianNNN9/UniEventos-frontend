@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { EventoDTO } from '../../dto/evento-dto';
 import { ActivatedRoute } from '@angular/router';
 import { EventosService } from '../../servicios/eventos.service';
 import { CommonModule } from '@angular/common';
+import { EventoDTO } from '../../dto/evento/evento-dto';
 
 
 @Component({

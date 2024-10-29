@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { OnChanges } from '@angular/core';
 import Swal from 'sweetalert2';
 import { EventosService } from '../../servicios/eventos.service';
-import { EventoDTO } from '../../dto/evento-dto';
 import { ActivatedRoute } from '@angular/router';
+import { EventoDTO } from '../../dto/evento/evento-dto';
 
 @Component({
   selector: 'app-crear-evento',

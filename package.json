@@ -20,6 +20,8 @@
     "@angular/router": "^17.3.0",
     "@fortawesome/fontawesome-free": "^6.6.0",
     "bootstrap": "^5.3.3",
+    "buffer": "^6.0.3",
+    "jjwins-angular-alert-messages": "^2.0.2",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.4",
     "tslib": "^2.3.0",

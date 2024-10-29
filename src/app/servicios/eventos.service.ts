@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EventoDTO } from '../dto/evento-dto';
+import { EventoDTO } from '../dto/evento/evento-dto';
 
 
 @Injectable({

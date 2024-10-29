@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { EventosService } from '../../servicios/eventos.service';
-import { EventoDTO } from '../../dto/evento-dto';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { EventoDTO } from '../../dto/evento/evento-dto';
 
 @Component({
   selector: 'app-inicio',
