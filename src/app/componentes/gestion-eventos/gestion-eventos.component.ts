@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { EventosService } from '../../servicios/eventos.service';
 import { RouterModule } from '@angular/router';
-import { EventoDTO } from '../../dto/evento-dto';
 import Swal from 'sweetalert2';
+import { EventoDTO } from '../../dto/evento/evento-dto';
 
 
 @Component({

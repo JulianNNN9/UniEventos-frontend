@@ -46,7 +46,7 @@ export class RegistroComponent {
         { cssClass: 'alerts-error', timeOut: 3000 }
       );
     } else {
-      this.publicoService.crearCuenta(value).subscribe({
+      this.publicoService.crearUsuario(value).subscribe({
         next: (data) => {
           Swal.fire({
             title: 'Cuenta creada',
@@ -56,10 +56,10 @@ export class RegistroComponent {
           });
               },
         error: (error) => {
-          const errores = error.error.respuesta.map((err: any) => `${err.campo}: ${err.mensaje}`).join('\n');
+
           Swal.fire({
             title: 'Error',
-            text: errores,
+            text: error.error.respuesta,
             icon: 'error',
             confirmButtonText: 'Aceptar',
           });
@@ -67,25 +67,5 @@ export class RegistroComponent {
       });
       this.clienteForm.resetForm();
     }
-
-    this.publicoService.crearCuenta(value).subscribe({
-      next: (data) => {
-        Swal.fire({
-          title: 'Cuenta creada',
-          text: 'La cuenta se ha creado correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        });
-            },
-      error: (error) => {
-        const errores = error.error.respuesta.map((err: any) => `${err.campo}: ${err.mensaje}`).join('\n');
-        Swal.fire({
-          title: 'Error',
-          text: errores,
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-        });
-      },
-    });
   }
 }

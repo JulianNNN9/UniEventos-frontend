@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EventoDTO } from '../../dto/evento-dto';
+import { EventoDTO } from '../../dto/evento/evento-dto';
 
 @Component({
   selector: 'app-carrito-compras',
