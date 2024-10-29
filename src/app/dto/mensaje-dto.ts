@@ -1,4 +1,4 @@
-export interface MensajeDTO {
-    error: boolean,
-    respuesta: any
+export interface MensajeDTO<T> {
+  error: boolean;
+  respuesta: T;
 }
