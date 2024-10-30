@@ -10,6 +10,8 @@ import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-eve
 import { CarritoComprasComponent } from './componentes/carrito-compras/carrito-compras.component';
 import { AuthAdminGuard } from './guardianes/auth-admin.guard';
 import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
+import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
+import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 
 export const routes: Routes = [
@@ -24,5 +26,7 @@ export const routes: Routes = [
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
    { path: 'editar-evento/:id', component: CrearEventoComponent},
    { path: 'carrito-compras', component: CarritoComprasComponent},
+   { path: 'editar-cuenta/:id', component: EditarCuentaComponent},
+   { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];
