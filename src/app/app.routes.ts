@@ -11,6 +11,7 @@ import { CarritoComprasComponent } from './componentes/carrito-compras/carrito-c
 import { AuthAdminGuard } from './guardianes/auth-admin.guard';
 import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
 import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
+import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
@@ -24,5 +25,6 @@ export const routes: Routes = [
    { path: 'editar-evento/:id', component: CrearEventoComponent},
    { path: 'carrito-compras', component: CarritoComprasComponent},
    { path: 'editar-cuenta/:id', component: EditarCuentaComponent},
+   { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];
