@@ -57,5 +57,13 @@ export class TokenService {
     }
     return '';
   }
+  public getNombre(): string {
+    const token = this.getToken();
+    if (token) {
+      const values = this.decodePayload(token);
+      return values.nombre;
+    }
+    return '';
+  }
   
 }

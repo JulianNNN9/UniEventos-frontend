@@ -12,10 +12,12 @@ import { AuthAdminGuard } from './guardianes/auth-admin.guard';
 import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
 import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
 import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
+import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
    { path: 'login', component: LoginComponent },
+   { path: 'activar-cuenta', component: ActivarCuentaComponent },
    { path: 'registro', component: RegistroComponent },
    { path: 'crear-evento', component: CrearEventoComponent},
    { path: 'header', component: HeaderComponent},
