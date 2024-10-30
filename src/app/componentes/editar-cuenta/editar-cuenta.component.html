@@ -1,0 +1,71 @@
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card" style="width: 30%">
+    <div class="card-header p-4">
+      <h5 class="mb-0"><i class="fa-solid fa-user-edit me-3"></i>Editar Cuenta</h5>
+    </div>
+    <div class="card-body p-4">
+      <form #editarCuentaForm="ngForm" (ngSubmit)="editarCuenta(editarCuentaForm)">
+        <div class="modal-body">
+
+          <!-- Campo para Nombre Completo -->
+          <div class="mb-3">
+            <label for="nombreCompleto" class="form-label">Nombre Completo</label>
+            <input
+              type="text"
+              name="nombreCompleto"
+              class="form-control"
+              [(ngModel)]="usuario.nombreCompleto"
+              #nombreCompleto="ngModel"
+              required
+              maxlength="30"
+              [ngClass]="{ 'is-invalid': nombreCompleto.errors && nombreCompleto.touched }"
+            />
+            <div *ngIf="nombreCompleto.errors && nombreCompleto.touched" class="text-danger">
+              <div *ngIf="nombreCompleto.errors['required']">Nombre completo es requerido.</div>
+              <div *ngIf="nombreCompleto.errors['maxlength']">Máximo 30 caracteres.</div>
+            </div>
+          </div>
+
+          <!-- Campo para Dirección -->
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input
+              type="text"
+              name="direccion"
+              class="form-control"
+              [(ngModel)]="usuario.direccion"
+              #direccion="ngModel"
+              maxlength="50"
+              [ngClass]="{ 'is-invalid': direccion.errors && direccion.touched }"
+            />
+            <div *ngIf="direccion.errors && direccion.touched" class="text-danger">
+              <div *ngIf="direccion.errors['maxlength']">Máximo 50 caracteres.</div>
+            </div>
+          </div>
+
+          <!-- Campo para Teléfono -->
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input
+              type="text"
+              name="telefono"
+              class="form-control"
+              [(ngModel)]="usuario.telefono"
+              #telefono="ngModel"
+              maxlength="10"
+              [ngClass]="{ 'is-invalid': telefono.errors && telefono.touched }"
+            />
+            <div *ngIf="telefono.errors && telefono.touched" class="text-danger">
+              <div *ngIf="telefono.errors['maxlength']">Máximo 10 caracteres.</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+        <jjwins-alert-messages></jjwins-alert-messages>
+      </form>
+    </div>
+  </div>
+</div>

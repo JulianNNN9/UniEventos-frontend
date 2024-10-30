@@ -10,6 +10,7 @@ import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-eve
 import { CarritoComprasComponent } from './componentes/carrito-compras/carrito-compras.component';
 import { AuthAdminGuard } from './guardianes/auth-admin.guard';
 import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
+import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
@@ -22,5 +23,6 @@ export const routes: Routes = [
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
    { path: 'editar-evento/:id', component: CrearEventoComponent},
    { path: 'carrito-compras', component: CarritoComprasComponent},
+   { path: 'editar-cuenta/:id', component: EditarCuentaComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];
