@@ -10,10 +10,12 @@ import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-eve
 import { CarritoComprasComponent } from './componentes/carrito-compras/carrito-compras.component';
 import { AuthAdminGuard } from './guardianes/auth-admin.guard';
 import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
+import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
    { path: 'login', component: LoginComponent },
+   { path: 'activar-cuenta', component: ActivarCuentaComponent },
    { path: 'registro', component: RegistroComponent },
    { path: 'crear-evento', component: CrearEventoComponent},
    { path: 'header', component: HeaderComponent},

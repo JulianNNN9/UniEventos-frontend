@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CrearUsuarioDTO } from '../dto/crear-usuario-dto';
@@ -9,9 +9,8 @@ import { InformacionEventoDTO } from '../dto/evento/informacion-evento-dto';
 import { ItemEventoDTO } from '../dto/evento/item-evento-dto';
 import { FiltrosEventosDTO } from '../dto/filtros-evento-dto';
 import { NotificacionEventoDTO } from '../dto/evento/notificacion-evento-dto';
-import { EnviarCodigoRecuperacionAlCorreoDTO } from '../dto/cuenta/enviar-codigo-recuperacion-al-correo-dto';
-import { EnviarCodigoActivacionAlCorreoDTO } from '../dto/cuenta/enviar-codigo-activacion-al-correo';
 import { RecuperarContraseniaDTO } from '../dto/cuenta/recuperar-contrasenia-dto';
+import { ActivarCuentaDTO } from '../dto/cuenta/activar-cuenta-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -64,23 +63,26 @@ export class PublicoService {
     );
   }
 
-  public enviarCodigoRecuperacion(correoDTO: EnviarCodigoRecuperacionAlCorreoDTO): Observable<MensajeDTO<string>> {
-    return this.http.post<MensajeDTO<string>>(
-      `${this.authURL}/enviar-codigo-recuperacion`,
-      correoDTO
-    );
-  }
-
-  public enviarCodigoActivacion(activacionDTO: EnviarCodigoActivacionAlCorreoDTO): Observable<MensajeDTO<string>> {
-    return this.http.post<MensajeDTO<string>>(
-      `${this.authURL}/enviar-codigo-activacion`,
-      activacionDTO
-    );
-  }
-
-  public activarCuenta(codigoActivacion: string): Observable<MensajeDTO<string>> {
+  public enviarCodigoRecuperacion(correo: string): Observable<MensajeDTO<string>> {
+    const params = new HttpParams().set('correo', correo);
     return this.http.get<MensajeDTO<string>>(
-      `${this.authURL}/activar-cuenta/${codigoActivacion}`
+      `${this.authURL}/enviar-codigo-recuperacion`,
+      { params }
+    );
+  }
+
+  public enviarCodigoActivacion(correo: string): Observable<MensajeDTO<string>> {
+    const params = new HttpParams().set('correo', correo);
+    return this.http.get<MensajeDTO<string>>(
+      `${this.authURL}/enviar-codigo-activacion`,
+      { params }
+    );
+  }
+
+  public activarCuenta(activarCuentaDTO: ActivarCuentaDTO): Observable<MensajeDTO<string>> {
+    return this.http.post<MensajeDTO<string>>(
+      `${this.authURL}/activar-cuenta`, 
+      activarCuentaDTO
     );
   }
 
