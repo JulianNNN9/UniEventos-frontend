@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 import { TokenService } from '../servicios/token.service';
 
 @Injectable()
-export class AuthAdminGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
   constructor(private router: Router, private tokenService: TokenService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    if (this.tokenService.isLogged() && this.tokenService.getRol() === 'ADMINISTRADOR') {
-        return true;
-      } else {
-        this.router.navigate(['/']);
-        return false;
+    if (this.tokenService.isLogged()) {
+      this.router.navigate([""]);
+      return false;
       }
+      return true;
+    
   }
 }

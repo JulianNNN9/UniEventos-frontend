@@ -1,4 +1,6 @@
+import { InformacionDetalleCarritoDTO } from "./informacion-detalle-carrito-dto";
+
 export interface AgregarItemDTO {
   idCarrito:string,
-  detalleCarrito:any //Todo: Definir tipo de dato para detalleCarrito
+  informacionDetalleCarrito: InformacionDetalleCarritoDTO; //Todo: Definir tipo de dato para detalleCarrito
 }

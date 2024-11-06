@@ -3,41 +3,67 @@ import { EventosService } from '../../servicios/eventos.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EventoDTO } from '../../dto/evento/evento-dto';
+import { ItemEventoDTO } from '../../dto/evento/item-evento-dto';
+import { MensajeDTO } from '../../dto/mensaje-dto';
+import { FiltrosEventosDTO } from '../../dto/filtros-evento-dto';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.css'
+  styleUrl: './inicio.component.css',
 })
 export class InicioComponent {
+  filtros = { nombreEvento: '', tipoEvento: '', ciudadEvento: '' };
 
-  filtros = {
-    nombre: '',
-    tipo: '',
-    ciudad: ''
-  };
+  eventos: ItemEventoDTO[] = [];
+  tiposDeEvento: string[] = [];
+  ciudades: string[] = [];
+  paginaActual: number = 0; // Índice de la página actual
+  hayMasEventos: boolean = true; // Indica si hay más eventos disponibles
 
-  eventos: EventoDTO[];
+  constructor(public eventosService: EventosService) {}
 
-  tiposDeEvento: string[];
-
-  eventosFiltrados: any[] = [];
-
-  constructor(public eventosService:EventosService) {
-    this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
-    this.eventos = eventosService.listar();
+  ngOnInit() {
+    this.cargarEventos();
+    this.cargarTipoEventos();
+    this.cargarCiudades();
   }
 
-  public buscarEventos() {
-    // Aquí implementarías la lógica para filtrar los eventos según los valores ingresados
-    console.log('Filtrando con:', this.filtros);
-    // Ejemplo de cómo podrías usar los filtros
-    this.eventosFiltrados = this.eventos.filter(evento =>
-      (this.filtros.nombre ? evento.nombre.includes(this.filtros.nombre) : true) &&
-      (this.filtros.tipo ? evento.tipo === this.filtros.tipo : true) &&
-      (this.filtros.ciudad ? evento.ciudad.includes(this.filtros.ciudad) : true)
-    );
+  cargarEventos() {
+    this.eventosService
+      .listarEventosPaginadosItem(this.paginaActual)
+      .subscribe((eventos: MensajeDTO<ItemEventoDTO[]>) => {
+        this.eventos = eventos.respuesta;
+        this.hayMasEventos = eventos.respuesta.length > 0; // Verifica si hay eventos
+        this.eventosService.setEventos(eventos.respuesta);
+      });
+  }
+  cargarTipoEventos() {
+    this.eventosService
+      .listarTipoEventos()
+      .subscribe((tipoEventos: MensajeDTO<string[]>) => {
+        this.tiposDeEvento = tipoEventos.respuesta;
+      });
+  }
+  cargarCiudades() {
+    this.eventosService
+      .listarCiudades()
+      .subscribe((ciudades: MensajeDTO<string[]>) => {
+        this.ciudades = ciudades.respuesta;
+      });
+  }
+
+  cambiarPagina(indice: number) {
+    this.paginaActual = indice;
+    this.cargarEventos();
+  }
+
+  buscarEventos() {
+    this.eventosService.filtrarEventosItem(this.filtros as FiltrosEventosDTO).subscribe((eventos) => {
+      this.eventos = eventos.respuesta;
+    })
   }
 }

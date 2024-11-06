@@ -1,6 +1,8 @@
 export interface ItemEventoDTO {
+  id: string;
   nombreEvento: string;
   direccionEvento: string;
   ciudadEvento: string;
-  fechaEvento: string; // Usamos string para representar la fecha en formato ISO
+  fechaEvento: Date; // Usamos string para representar la fecha en formato ISO
+  imagenPortada: string;
 }

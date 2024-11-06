@@ -11,20 +11,16 @@
         <span class="fs-4 ms-3 me-3">{{ title }}</span>
       </a>
     </div>
+    <div class="col-md-3 mb-2 mb-md-0">
+      <ul *ngIf="isAdmin()" class="nav">
+        <li>
+          <a routerLink="/gestion-eventos" class="nav-link px-2"
+            >Gestión de eventos</a
+          >
+        </li>
+      </ul>
+    </div>
 
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a routerLink="/" class="nav-link px-2">Inicio</a></li>
-      <li>
-        <a routerLink="/gestion-eventos" class="nav-link px-2"
-          >Gestión de eventos</a
-        >
-      </li>
-      <li>
-        <a routerLink="/carrito-compras" class="nav-link px-2"
-          >Carrito (Temporal)</a
-        >
-      </li>
-    </ul>
     <div class="col-md-3 d-flex justify-content-end align-items-center">
       <div *ngIf="isAutenticado()" class="dropdown me-3">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -38,9 +34,13 @@
           </li>
         </ul>
       </div>
-    
+
       <div *ngIf="!isAutenticado()">
-        <button type="button" class="btn btn-outline-primary me-2" routerLink="/login">
+        <button
+          type="button"
+          class="btn btn-outline-primary me-2"
+          routerLink="/login"
+        >
           Login
         </button>
       </div>
@@ -55,44 +55,73 @@
         </a>
       </div>
     </div>
+
+    <div class="col-md-2 d-flex justify-content-end align-items-center">
+      <!-- Carrito -->
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        routerLink="/carrito-compras"
+      >
+        <i class="fa-solid fa-shopping-cart"></i> Carrito
+      </button>
+      <button
+        type="button"
+        class="btn position-relative me-2"
+        id="notification-btn"
+        (click)="mostrarNotificaciones()"
+      >
+        <i class="fa-solid fa-bell fs-5"></i>
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        >
+          {{ cantidadNotificaciones() }}
+        </span>
+      </button>
+    </div>
   </header>
 </div>
 
-<!-- <div class="container">
-        <header class="d-flex flex-wrap align-items-center justify-content-between py-3">
-          <div class="col-md-3 mb-2 mb-md-0 d-flex align-items-center">
-            <a routerLink="" class="d-inline-flex link-body-emphasis text-decoration-none align-items-center">
-              <i class="fa-solid fa-ticket fs-3"></i>
-              <span class="fs-4 ms-3 me-3">{{title}}</span>
-            </a>
-          </div>
+<!-- Modal de Notificaciones -->
+<div *ngIf="modalVisible" class="modal fade show" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notificationsModalLabel">Notificaciones de Eventos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="notificaciones.length > 0; else noNotifications">
+          <ul class="list-group">
+            <li *ngFor="let notificacion of notificaciones" class="list-group-item d-flex align-items-center">
+              <!-- Imagen de Portada -->
+              <img *ngIf="notificacion.imagenPortada" [src]="notificacion.imagenPortada" alt="Imagen del Evento" class="me-3" style="width: 120px; height: 120px; object-fit: cover;">
 
-          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a routerLink="/" class="nav-link px-3">Inicio</a></li>
+              <!-- Contenido de la notificación -->
+              <div>
+                <h6><strong>Nombre:</strong> {{ notificacion.nombreEvento }}</h6>
+                <p><strong>Fecha:</strong> {{ notificacion.fechaEvento | date:'short' }}</p>
+                <p><strong>Descripcion:</strong> {{ notificacion.descripcionEvento | slice:0:100 }}...</p>
+                <p><strong>Ubicación:</strong> {{ notificacion.ciudadEvento }}</p>
+                <a
+                [routerLink]="['/detalle-evento', notificacion._id]"
+                class="btn btn-info btn-sm"
+                (click)="cerrarModal()"
+
+              >
+                Detalle
+              </a>
+              </div>
+            </li>
           </ul>
-
-
-          <div class="col-md-3 d-flex justify-content-end align-items-center">
-
-            <button type="button" class="btn position-relative me-3" id="notification-btn">
-              <i class="fa-solid fa-bell fs-5"></i>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                3
-              </span>
-            </button>
-
-
-            <div class="dropdown">
-              <button class="btn btn-outline-primary dropdown-toggle" type="button" id="accountMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                Mi cuenta
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountMenu">
-                <li><a class="dropdown-item" href="#">Nombre: Usuario</a></li>
-                <li><a class="dropdown-item" href="#">Correo: usuario.com</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
-              </ul>
-            </div>
-          </div>
-        </header>
-      </div>-->
+        </div>
+        <ng-template #noNotifications>
+          <p>No tienes notificaciones de eventos en este momento.</p>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

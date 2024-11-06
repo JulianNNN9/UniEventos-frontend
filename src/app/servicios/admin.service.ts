@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { CrearCuponDTO } from '../dto/cupon/crear-cupon-dto';
 import { EditarCuponDTO } from '../dto/cupon/editar-cupon-dto';
 import { CuponDTO } from '../dto/cupon/cupon-dto';
+import { EliminarEventosDTO } from '../dto/evento/eliminar-eventos-dto';
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +33,12 @@ export class AdminService {
   public eliminarEvento(idEvento: string): Observable<MensajeDTO<string>> {
     return this.http.get<MensajeDTO<string>>(
       `${this.authURL}/eventos/eliminar-evento/${idEvento}`
+    );
+  }
+  public eliminarEventos(eliminarEventosDTO: EliminarEventosDTO): Observable<MensajeDTO<string>> {
+    return this.http.post<MensajeDTO<string>>(
+      `${this.authURL}/eventos/eliminar-eventos`,
+      eliminarEventosDTO
     );
   }
 

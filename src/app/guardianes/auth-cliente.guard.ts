@@ -1,8 +1,5 @@
 import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
-
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { TokenService } from '../servicios/token.service';
 
 @Injectable()

@@ -1,5 +1,6 @@
 export interface LocalidadDTO {
-  nombre:string,
-  precio:number,
-  capacidad:number
+  nombreLocalidad:string;
+  precioLocalidad:number;
+  capacidadMaxima:number;
+  entradasRestantes: number;
 }

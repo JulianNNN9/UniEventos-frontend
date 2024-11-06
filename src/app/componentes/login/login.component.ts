@@ -39,7 +39,6 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
       this.publicoService.iniciarSesion(this.loginForm.value).subscribe({
         next: (data) => {
           Swal.fire({
