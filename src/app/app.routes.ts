@@ -13,6 +13,7 @@ import { AuthClienteGuard } from './guardianes/auth-cliente.guard';
 import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta.component';
 import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
+import { DetalleCompraComponent } from './componentes/detalle-compra/detalle-compra.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
@@ -24,6 +25,7 @@ export const routes: Routes = [
    { path: 'footer', component: FooterComponent},
    { path: "gestion-eventos", component: GestionEventosComponent},
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
+   { path: 'detalle-compra/:id', component: DetalleCompraComponent },
    { path: 'editar-evento/:id', component: CrearEventoComponent},
    { path: 'carrito-compras', component: CarritoComprasComponent},
    { path: 'editar-cuenta/:id', component: EditarCuentaComponent},

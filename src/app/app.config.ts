@@ -19,6 +19,7 @@ import { LoginGuard } from './guardianes/login.guard';
 import { usuarioInterceptor } from './interceptor/usuario.interceptor';
 import { AuthService } from './servicios/auth.service';
 import { NotificacionService } from './servicios/notificacion.service';
+import { DetalleCompraService } from './servicios/detalle-compra.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,6 +32,7 @@ export const appConfig: ApplicationConfig = {
     DetalleEventoService,
     CrearEventoService,
     CarritoService,
+    DetalleCompraService,
     TokenService,
     AdminService,
     PublicoService,

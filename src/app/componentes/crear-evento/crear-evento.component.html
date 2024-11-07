@@ -328,6 +328,12 @@
                     class="form-control"
                     formControlName="nombreLocalidad"
                   />
+                  <div
+                    *ngIf="localidad.get('nombreLocalidad')?.invalid"
+                    class="text-danger"
+                  >
+                    El Nombre es requerido
+                  </div>
                 </div>
                 <!-- Campo Precio de la Localidad -->
                 <div class="col">
@@ -341,6 +347,12 @@
                     formControlName="precioLocalidad"
                     min="0"
                   />
+                  <div
+                    *ngIf="localidad.get('precioLocalidad')?.invalid"
+                    class="text-danger"
+                  >
+                    El Precio debe ser mayor que 0
+                  </div>
                 </div>
 
                 <!-- Campo Cantidad de Entradas -->
@@ -354,6 +366,35 @@
                     class="form-control"
                     formControlName="capacidadMaxima"
                   />
+                  <div
+                    *ngIf="localidad.get('capacidadMaxima')?.invalid"
+                    class="text-danger"
+                  >
+                    La Capacidad debe ser de al menos 2
+                  </div>
+                </div>
+                <!-- Campo Cantidad de Entradas -->
+                <div class="col">
+                  <label for="entradasRestantes-{{ i }}" class="form-label"
+                    >Entradas</label
+                  >
+                  <input
+                    type="number"
+                    id="entradasRestantes-{{ i }}"
+                    class="form-control"
+                    formControlName="entradasRestantes"
+                  />
+                  <div
+                    *ngIf="
+                      localidad
+                        .get('entradasRestantes')
+                        ?.hasError('capacidadExcedida')
+                    "
+                    class="text-danger"
+                  >
+                    Las entradas restantes no pueden superar la capacidad
+                    máxima.
+                  </div>
                 </div>
               </div>
 

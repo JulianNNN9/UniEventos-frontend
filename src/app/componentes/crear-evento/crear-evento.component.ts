@@ -105,11 +105,21 @@ export class CrearEventoComponent {
                 ],
                 capacidadMaxima: [
                   localidad.capacidadMaxima,
-                  [Validators.required, Validators.min(1)],
+                  [Validators.required, Validators.min(2)],
+                ],
+                entradasRestantes: [
+                  localidad.entradasRestantes,
+                  [
+                    Validators.required,
+                    Validators.min(1),
+                    this.capacidadMaximaValidator()
+                  ],
                 ],
               });
-              localidadesArray.push(localidadGroup); // Agregar la localidad al FormArray
+  
+              localidadesArray.push(localidadGroup);
             });
+
             this.imagenPortadaActualURL = evento.imagenPortada;
             this.imagenLocalidadesActualURL = evento.imagenLocalidades;
           }
@@ -143,13 +153,18 @@ export class CrearEventoComponent {
   agregarLocalidad() {
     const localidadGroup = this.formBuilder.group({
       nombreLocalidad: ['', Validators.required],
-      precioLocalidad: [0, [Validators.required, Validators.min(0)]], // nuevo campo para precio
-      capacidadMaxima: [0, [Validators.required, Validators.min(1)]],
+      precioLocalidad: [0, [Validators.required, Validators.min(1)]],
+      capacidadMaxima: [0, [Validators.required, Validators.min(2)]],
+      entradasRestantes: [0, [
+        Validators.required,
+        Validators.min(1),
+        this.capacidadMaximaValidator()
+      ]]
     });
-
-    // Accedemos al FormArray de localidades y le añadimos el nuevo grupo
+  
     (this.crearEventoForm.get('localidades') as FormArray).push(localidadGroup);
   }
+
   eliminarTodasLocalidades() {
     this.localidades.clear();
   }
@@ -265,6 +280,17 @@ export class CrearEventoComponent {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const localidades = control as FormArray;
       return localidades.length > 0 ? null : { noLocalidades: true };
+    };
+  }
+  private capacidadMaximaValidator(): ValidatorFn {
+    return (control: AbstractControl) => {
+      const formGroup = control.parent as FormGroup;
+      const capacidadMaxima = formGroup?.get('capacidadMaxima')?.value;
+      const entradasRestantes = control.value;
+  
+      return entradasRestantes > capacidadMaxima
+        ? { capacidadExcedida: true }
+        : null;
     };
   }
 

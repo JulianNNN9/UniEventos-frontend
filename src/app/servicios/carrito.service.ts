@@ -2,27 +2,84 @@ import { Injectable } from '@angular/core';
 import { EventoDTO } from '../dto/evento/evento-dto';
 import { AgregarItemDTO } from '../dto/carrito/agregar-item-dto';
 import { ClienteService } from './cliente.service';
+import { InformacionCarritoDTO } from '../dto/carrito/informacion-carrito-dto';
+import { TokenService } from './token.service';
+import { Observable } from 'rxjs';
+import { MensajeDTO } from '../dto/mensaje-dto';
+import { EditarCarritoDTO } from '../dto/carrito/editar-carrito-dto';
+import { EliminarDelCarritoDTO } from '../dto/carrito/eliminar-del-carrito-dto';
+import { DetalleCarritoDTO } from '../dto/carrito/detalle-carrito-dto';
+import { InformacionCuponDTO } from '../dto/cupon/informacion-cupon-dto';
+import { CrearCompraDTO } from '../dto/compra/crear-compra-dto';
+import { InformacionItemCompraDTO } from '../dto/compra/informacion-item-compra-dto';
 @Injectable({
   providedIn: 'root',
 })
 export class CarritoService {
-  private carrito: EventoDTO[] = [];
-
+  
+  detalleCarritos: DetalleCarritoDTO[] = [];
+  
   constructor(
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private tokenService: TokenService
   ){
 
   }
-  agregarItemCarrito(agregarItemDTO: AgregarItemDTO) {
-    return this.clienteService.agregarCarrito(agregarItemDTO);
+  setDetalleCarrito(detalleCarritos: DetalleCarritoDTO[]) {
+    this.detalleCarritos = detalleCarritos;
+  }
+  editarCarrito(editarCarritoDTO: EditarCarritoDTO): Observable<MensajeDTO<string>> {
+    return this.clienteService.editarCarrito(editarCarritoDTO);
+  }
+  eliminarItemCarrito(idCarrito: string, detalleCarritoDTO: DetalleCarritoDTO): Observable<MensajeDTO<string>> {
+    const indice: number = this.detalleCarritos.indexOf(detalleCarritoDTO);
+    this.detalleCarritos.splice(indice, 1);
+    const eliminarDelCarrito: EliminarDelCarritoDTO = {
+      idCarrito: idCarrito,
+      nombreLocalidad: detalleCarritoDTO.nombreLocalidad,
+      idEvento: detalleCarritoDTO.evento.id,
+    };
+    return this.clienteService.eliminarCarrito(eliminarDelCarrito);
   }
 
-  obtenerCarrito(): EventoDTO[] {
-    return this.carrito;
+  agregarItemCarrito(agregarItemDTO: AgregarItemDTO): Observable<MensajeDTO<string>> {
+    return this.clienteService.agregarCarrito(agregarItemDTO);
+  }
+  validarCupon(codigoCupon: string, idUsuario: string): Observable<MensajeDTO<InformacionCuponDTO>> {
+    return this.clienteService.validarCupon(codigoCupon, idUsuario);
+  }
+
+  obtenerCarrito(): Observable<MensajeDTO<InformacionCarritoDTO>> {
+    return this.clienteService.obtenerCarrito(this.tokenService.getIDCuenta());
+  }
+
+  // Método para recorrer los items de DetalleCarritoDTO y crear la compra
+  crearCompra(idUsuario: string, informacionCuponDTO: InformacionCuponDTO | null=null): Observable<MensajeDTO<string>> {
+    // Convertir cada DetalleCarritoDTO a InformacionItemCompraDTO
+    let codigoCupon: string = '';
+    if(informacionCuponDTO != null){
+      codigoCupon = informacionCuponDTO.codigo;
+    }
+    const itemsCompra: InformacionItemCompraDTO[] = this.detalleCarritos.map((detalle) => ({
+      idEvento: detalle.evento.id,
+      nombreLocalidad: detalle.nombreLocalidad,
+      cantidad: detalle.cantidad,
+      precioUnitario: detalle.precioLocalidad
+    }));
+
+    // Crear el objeto DTO para la compra
+    const crearCompraDTO: CrearCompraDTO = {
+      idUsuario: idUsuario,
+      informacionItemCompraDTOS: itemsCompra,
+      codigoCupon: codigoCupon
+    };
+
+    // Llamada al servicio para crear la compra
+    return this.clienteService.crearCompra(crearCompraDTO);
   }
 
   limpiarCarrito() {
-    this.carrito = [];
+    this.detalleCarritos.splice(0, this.detalleCarritos.length);
   }
 }
 

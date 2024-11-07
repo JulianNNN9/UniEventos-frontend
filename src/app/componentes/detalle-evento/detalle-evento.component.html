@@ -5,7 +5,7 @@
     </div>
 
     <div class="text-center">
-      <img [src]="evento.imagenPortada" class="img-fluid p-4" alt="{{ evento.nombreEvento }}" style="max-width: 100%; height: 600px; object-fit: cover;">
+      <img [src]="evento.imagenPortada" class="img-fluid p-4" alt="{{ evento.nombreEvento }}" style="max-width: 80%; height: 500px; object-fit: cover;">
     </div>
 
     <div class="card-body">
@@ -15,7 +15,7 @@
       <p class="card-text"><strong>Dirección:</strong> {{ evento.direccionEvento }}</p>
       <p class="card-text"><strong>Ciudad:</strong> {{ evento.ciudadEvento }}</p>
       <p class="card-text"><strong>Estado:</strong> {{ evento.estadoEvento }}</p>
-
+    
       <h5 class="mt-4">Localidades</h5>
       <div *ngIf="evento.localidades.length > 0; else noLocalidades">
         <table class="table table-bordered">
@@ -23,6 +23,7 @@
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Capacidad</th>
+              <th scope="col">Disponibles</th>
               <th scope="col">Precio</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Acción</th>
@@ -32,21 +33,27 @@
             <tr *ngFor="let localidad of evento.localidades">
               <td>{{ localidad.nombreLocalidad }}</td>
               <td>{{ localidad.capacidadMaxima }}</td>
+              <td>{{ localidad.entradasRestantes }}</td>
               <td>{{ localidad.precioLocalidad | currency }}</td>
               <td>
                 <input type="number" [(ngModel)]="cantidad" min="1" style="width: 60px;">
               </td>
               <td>
-                <button class="btn btn-primary" (click)="seleccionarLocalidad(localidad)">Seleccionar</button>
+                <button class="btn btn-primary" (click)="seleccionarLocalidad(localidad)">
+                  <!-- Mostrar el check si la localidad está seleccionada -->
+                  <span *ngIf="localidad === localidadSeleccionada" class="fas fa-check"></span>
+                  Seleccionar
+                </button>
               </td>
             </tr>
           </tbody>
+          <jjwins-alert-messages></jjwins-alert-messages>
         </table>
       </div>
       <ng-template #noLocalidades>
         <p>No hay localidades disponibles para este evento.</p>
       </ng-template>
-
+    
       <h5 class="mt-4">Imagenes Localidades</h5>
     </div>
     
@@ -59,5 +66,4 @@
         Agregar al Carrito
       </button>
     </div>
-  </div>
 </div>

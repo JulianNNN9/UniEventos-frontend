@@ -1,9 +1,11 @@
+import { InformacionItemCompraDTO } from "./informacion-item-compra-dto";
+
 export interface InformacionCompraDTO {
     id: string;
     idUsuario: string;
-    itemsCompra: any[];
+    informacionItemCompraDTOS: InformacionItemCompraDTO[];
     total: number;
-    fechaCompra: Date;  // En Angular, podemos usar Date para manejar LocalDateTime de Java
+    fechaCompra: string;  // En Angular, podemos usar Date para manejar LocalDateTime de Java
     codigoCupon: string;
     estadoCompra: any;
     codigoPasarela: string;
