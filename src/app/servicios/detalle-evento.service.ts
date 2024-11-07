@@ -8,35 +8,22 @@ import { CrearEventoDTO } from '../dto/evento/crear-evento-dto';
 import { EditarEventoDTO } from '../dto/evento/editar-evento-dto';
 import { InformacionEventoDTO } from '../dto/evento/informacion-evento-dto';
 import { AdminService } from './admin.service';
-import { FiltrosEventosDTO } from '../dto/filtros-evento-dto';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EventosService {
-  eventos: ItemEventoDTO[] = [];
+export class DetalleEventoService {
+  eventos: InformacionEventoDTO[] = [];
 
   constructor(
     private publicService: PublicoService,
     private adminService: AdminService
   ) {}
-  setEventos(eventos: ItemEventoDTO[]) {
+  setEventos(eventos: InformacionEventoDTO[]) {
     this.eventos = eventos;
   }
-  public listarEventosPaginadosItem(pagina: number): Observable<MensajeDTO<ItemEventoDTO[]>> {
-    return this.publicService.listarEventosPaginadosItem(pagina, 12);
-  }
-  public listarEventos(): Observable<MensajeDTO<InformacionEventoDTO[]>> {
-    return this.publicService.listarEventos();
-  }
-  public listarCiudades(): Observable<MensajeDTO<string[]>> {
-    return this.publicService.listarCiudades();
-  }
-  public listarTipoEventos(): Observable<MensajeDTO<string[]>> {
-    return this.publicService.listarTipoEventos();
-  }
-  public filtrarEventosItem(filtrosEventosDTO: FiltrosEventosDTO): Observable<MensajeDTO<ItemEventoDTO[]>> {
-    return this.publicService.filtrarEventoItem(filtrosEventosDTO);
+  public listarEventosPaginadosInfo(pagina: number): Observable<MensajeDTO<InformacionEventoDTO[]>> {
+    return this.publicService.listarEventosPaginadosInfo(pagina, 8);
   }
 
   crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO<string>> {

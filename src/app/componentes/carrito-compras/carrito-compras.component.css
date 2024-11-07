@@ -1,0 +1,69 @@
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.price-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;  /* Alineación a la derecha */
+  font-weight: bold;
+  font-size: 1.2rem;  /* Ajusta el tamaño según sea necesario */
+}
+  .price {
+    font-weight: bold;
+    font-size: 1.2rem; /* Ajusta el tamaño de la fuente si lo deseas */
+  }
+/* Se añade margen a cada producto para separarlos entre sí */
+.items .product {
+    margin-bottom: 20px; /* Aumenta el espacio vertical entre los productos */
+    padding: 10px;  /* Espacio interno entre los bordes del contenedor y el contenido */
+    border: 1px solid #ddd;  /* Agregar un borde ligero para mejorar la visibilidad */
+    border-radius: 8px;  /* Bordes redondeados */
+    background-color: #f9f9f9;  /* Color de fondo ligero */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Sombra ligera */
+  }
+  
+  /* Añadir espacio dentro de la información del producto */
+  .info {
+    padding: 15px;
+  }
+  
+  /* Asegurarse de que la imagen tenga margen en su contenedor */
+  .image {
+    margin-bottom: 15px;  /* Espacio debajo de la imagen */
+    max-width: 100%;  /* Asegura que la imagen se ajuste bien */
+    height: auto;  /* Mantiene la proporción de la imagen */
+  }
+  
+  /* Para separar los elementos dentro de cada producto */
+  .row > .col-md-6 {
+    margin-bottom: 10px;  /* Espacio entre cada fila dentro del producto */
+  }
+  
+  .price-container {
+    margin-bottom: 15px;  /* Separar el precio de la descripción del evento */
+  }
+  
+  /* Asegurar que los elementos de texto dentro de cada producto estén bien distribuidos */
+  h5 {
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin-bottom: 15px; /* Separación entre la descripción y el resto de los elementos */
+  }
+  .coupon-info {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 1rem;
+  }

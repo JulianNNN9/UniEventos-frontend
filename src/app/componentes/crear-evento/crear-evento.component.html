@@ -1,45 +1,424 @@
 <div class="container d-flex justify-content-center align-items-center">
-    <div class="card" style="width: 50%;">
-      <div class="card-header p-4">
-        <h5 class="mb-0">
-          <i class="fa-solid fa-calendar-plus me-3"></i>Crear Nuevo Evento
-        </h5>
-      </div>
-      <div class="card-body p-4">
-        <form [formGroup]="crearEventoForm" (ngSubmit)="crearEvento()">
-          <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre del Evento</label>
-            <input type="text" id="nombre" class="form-control" formControlName="nombre">
+  <div class="card" style="width: 50%">
+    <div class="card-header p-4">
+      <h5 class="mb-0">
+        <i class="fa-solid fa-calendar-plus me-3"></i>Crear Nuevo Evento
+      </h5>
+    </div>
+    <div class="card-body p-4">
+      <form [formGroup]="crearEventoForm" (ngSubmit)="crearEvento()">
+        <div class="mb-3">
+          <label for="nombreEvento" class="form-label">Nombre del Evento</label>
+          <input
+            type="text"
+            id="nombreEvento"
+            class="form-control"
+            formControlName="nombreEvento"
+          />
+          <div
+            *ngIf="
+              crearEventoForm.get('nombreEvento')?.invalid &&
+              crearEventoForm.get('nombreEvento')?.touched
+            "
+            class="text-danger"
+          >
+            Nombre de Evento Requerido
           </div>
-          <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="descripcionEvento" class="form-label">Descripción</label>
+          <textarea
+            id="descripcionEvento"
+            class="form-control"
+            formControlName="descripcionEvento"
+          ></textarea>
+          <div
+            *ngIf="
+              crearEventoForm.get('descripcionEvento')?.invalid &&
+              crearEventoForm.get('descripcionEvento')?.touched
+            "
+            class="text-danger"
+          >
+            Descripcion de Evento Requerido
           </div>
-          <div class="mb-3">
-            <label for="tipo" class="form-label">Tipo de Evento</label>
-            <select id="tipo" class="form-control" formControlName="tipo">
-              <option value="">Seleccione un tipo</option>
-              @for (item of tiposDeEvento; track $index) {
-                  <option value="{{item}}">{{item}}</option>}          </select>
+        </div>
+
+        <!-- Selector para Tipo de Evento -->
+        <div class="mb-3">
+          <label for="tipoEvento" class="form-label">Tipo de Evento</label>
+          <select
+            id="tipoEvento"
+            class="form-control"
+            formControlName="tipoEvento"
+          >
+            <option value="">Seleccione un tipo</option>
+            <option *ngFor="let tipo of tiposDeEvento" [value]="tipo">
+              {{ tipo }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              crearEventoForm.get('tipoEvento')?.invalid &&
+              crearEventoForm.get('tipoEvento')?.touched
+            "
+            class="text-danger"
+          >
+            Tipo de Evento Requerido
           </div>
-          <div class="mb-3">
-            <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" id="direccion" class="form-control" formControlName="direccion">
+        </div>
+
+        <div class="mb-3">
+          <label for="direccionEvento" class="form-label">Dirección</label>
+          <input
+            type="text"
+            id="direccionEvento"
+            class="form-control"
+            formControlName="direccionEvento"
+          />
+          <div
+            *ngIf="
+              crearEventoForm.get('direccionEvento')?.invalid &&
+              crearEventoForm.get('direccionEvento')?.touched
+            "
+            class="text-danger"
+          >
+            Dirección de Evento Requerido
           </div>
-          <div class="mb-3">
-            <label for="ciudad" class="form-label">Ciudad</label>
-            <input type="text" id="ciudad" class="form-control" formControlName="ciudad">
+        </div>
+
+        <!-- Selector para Ciudad -->
+        <div class="mb-3">
+          <label for="ciudadEvento" class="form-label">Ciudad</label>
+          <select
+            id="ciudadEvento"
+            class="form-control"
+            formControlName="ciudadEvento"
+          >
+            <option value="">Seleccione una ciudad</option>
+            <option *ngFor="let ciudad of ciudades" [value]="ciudad">
+              {{ ciudad }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              crearEventoForm.get('ciudadEvento')?.invalid &&
+              crearEventoForm.get('ciudadEvento')?.touched
+            "
+            class="text-danger"
+          >
+            Ciudad Requerida
           </div>
-          <div class="mb-3">
-            <label for="imagenPortada" class="form-label">Imagen de Portada</label>
-            <input type="file" id="imagenPortada" class="form-control" (change)="onFileChange($event, 'portada')">
+        </div>
+
+        <!-- Imagen de Portada -->
+        <div class="mb-3">
+          <label class="form-label">Imagen de Portada Actual</label>
+
+          <div>
+            <img
+              *ngIf="modoEdicion"
+              [src]="
+                editarImagenPortada
+                  ? imagenPortadaNuevaURL
+                  : imagenPortadaActualURL
+              "
+              alt="Imagen de Portada"
+              class="img-thumbnail"
+              style="max-width: 250px; max-height: 150px"
+            />
+            <img
+              *ngIf="!modoEdicion"
+              [src]="imagenPortadaNuevaURL"
+              alt="Imagen de Portada"
+              class="img-thumbnail"
+              style="max-width: 250px; max-height: 150px"
+            />
           </div>
-          <div class="mb-3">
-            <label for="imagenLocalidades" class="form-label">Imagen de Localidades</label>
-            <input type="file" id="imagenLocalidades" class="form-control" (change)="onFileChange($event, 'localidades')">
+          <div class="d-flex align-items-center">
+            <!-- Utilizamos d-flex para alinear horizontalmente -->
+            <div *ngIf="modoEdicion" class="form-check me-3">
+              <!-- Se añade me-3 para margen derecho -->
+              <input
+                type="checkbox"
+                id="editarImagenPortada"
+                class="form-check-input"
+                (click)="toggleEditarImagenPortada()"
+              />
+              <label for="editarImagenPortada" class="form-check-label">
+                Editar imagen de portada
+              </label>
+            </div>
+
+            <div
+              *ngIf="
+                modoEdicion &&
+                !editarImagenPortada &&
+                imagenPortadaActualURL != ''
+              "
+            >
+              <button
+                class="btn btn-danger"
+                (click)="eliminarImagenFirebase('portada')"
+              >
+                Eliminar Imagen de Portada
+              </button>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary">Crear Evento</button>
-        </form>
-      </div>
+        </div>
+        <div class="mb-3" *ngIf="!modoEdicion || editarImagenPortada">
+          <label for="imagenPortada" class="form-label"
+            >Imagen de Portada</label
+          >
+          <input
+            type="file"
+            id="imagenPortada"
+            class="form-control"
+            (change)="onFileChange($event, 'portada')"
+          />
+          <div
+            *ngIf="
+              crearEventoForm.get('imagenPortada')?.invalid &&
+              crearEventoForm.get('imagenPortada')?.touched
+            "
+            class="text-danger"
+          >
+            Imagen de Portada Requerida
+          </div>
+        </div>
+
+        <!-- Imagen de Localidades -->
+        <div class="mb-3">
+          <label class="form-label">Imagen de Localidades Actual</label>
+
+          <div>
+            <img
+              *ngIf="modoEdicion"
+              [src]="
+                editarImagenLocalidades
+                  ? imagenLocalidadesNuevaURL
+                  : imagenLocalidadesActualURL
+              "
+              alt="Imagen de Localidades"
+              class="img-thumbnail"
+              style="max-width: 250px; max-height: 150px"
+            />
+            <img
+              *ngIf="!modoEdicion"
+              [src]="imagenLocalidadesNuevaURL"
+              alt="Imagen de Localidades"
+              class="img-thumbnail"
+              style="max-width: 250px; max-height: 150px"
+            />
+          </div>
+
+          <div class="d-flex align-items-center">
+            <!-- Se utiliza d-flex para alinear horizontalmente -->
+            <div *ngIf="modoEdicion" class="form-check me-3">
+              <!-- Se añade me-3 para margen derecho -->
+              <input
+                type="checkbox"
+                id="editarImagenLocalidades"
+                class="form-check-input"
+                (click)="toggleEditarImagenLocalidades()"
+              />
+              <label for="editarImagenLocalidades" class="form-check-label">
+                Editar imagen de localidades
+              </label>
+            </div>
+            <div
+              *ngIf="
+                modoEdicion &&
+                !editarImagenLocalidades &&
+                imagenLocalidadesActualURL != ''
+              "
+            >
+              <button
+                class="btn btn-danger"
+                (click)="eliminarImagenFirebase('localidades')"
+              >
+                Eliminar Imagen de Localidades
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carga de Imagen de Localidades -->
+        <div class="mb-3" *ngIf="!modoEdicion || editarImagenLocalidades">
+          <label for="imagenLocalidades" class="form-label"
+            >Imagen de Localidades</label
+          >
+          <input
+            type="file"
+            id="imagenLocalidades"
+            class="form-control"
+            (change)="onFileChange($event, 'localidades')"
+          />
+          <div
+            *ngIf="
+              crearEventoForm.get('imagenLocalidades')?.invalid &&
+              crearEventoForm.get('imagenLocalidades')?.touched
+            "
+            class="text-danger"
+          >
+            Imagen de localidades Requerida
+          </div>
+        </div>
+
+        <!-- Fecha del Evento -->
+        <div class="mb-3">
+          <label for="fechaEvento" class="form-label">Fecha del Evento</label>
+          <input
+            type="datetime-local"
+            id="fechaEvento"
+            class="form-control"
+            formControlName="fechaEvento"
+          />
+        </div>
+        <!-- Selector para Estado de Evento -->
+        <div *ngIf="modoEdicion" class="mb-3">
+          <label for="estadoEvento" class="form-label">Estado de Evento</label>
+          <select
+            id="estadoEvento"
+            class="form-control"
+            formControlName="estadoEvento"
+          >
+            <option value="">Seleccione un Estado</option>
+            <option *ngFor="let estado of estadoEventos" [value]="estado">
+              {{ estado }}
+            </option>
+          </select>
+        </div>
+        <!-- Sección para agregar Localidades -->
+        <div class="mb-3">
+          <div class="d-flex align-items-center mb-2">
+            <label class="form-label me-3 mb-0">Localidades</label>
+            <!-- Botón para agregar nuevas localidades -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="agregarLocalidad()"
+            >
+              + Agregar Localidad
+            </button>
+            <button
+              *ngIf="localidades.length > 0"
+              type="button"
+              class="btn btn-danger"
+              (click)="eliminarTodasLocalidades()"
+            >
+              - Quitar Todas las Localidades
+            </button>
+          </div>
+
+          <div formArrayName="localidades">
+            <div
+              *ngFor="let localidad of localidades.controls; let i = index"
+              [formGroupName]="i"
+              class="mb-3"
+            >
+              <div class="row mb-2">
+                <!-- Campo Nombre de la Localidad -->
+                <div class="col">
+                  <label for="nombreLocalidad-{{ i }}" class="form-label"
+                    >Nombre</label
+                  >
+                  <input
+                    type="text"
+                    id="nombreLocalidad-{{ i }}"
+                    class="form-control"
+                    formControlName="nombreLocalidad"
+                  />
+                  <div
+                    *ngIf="localidad.get('nombreLocalidad')?.invalid"
+                    class="text-danger"
+                  >
+                    El Nombre es requerido
+                  </div>
+                </div>
+                <!-- Campo Precio de la Localidad -->
+                <div class="col">
+                  <label for="precioLocalidad-{{ i }}" class="form-label"
+                    >Precio</label
+                  >
+                  <input
+                    type="number"
+                    id="precioLocalidad-{{ i }}"
+                    class="form-control"
+                    formControlName="precioLocalidad"
+                    min="0"
+                  />
+                  <div
+                    *ngIf="localidad.get('precioLocalidad')?.invalid"
+                    class="text-danger"
+                  >
+                    El Precio debe ser mayor que 0
+                  </div>
+                </div>
+
+                <!-- Campo Cantidad de Entradas -->
+                <div class="col">
+                  <label for="capacidadMaxima-{{ i }}" class="form-label"
+                    >Capacidad</label
+                  >
+                  <input
+                    type="number"
+                    id="capacidadMaxima-{{ i }}"
+                    class="form-control"
+                    formControlName="capacidadMaxima"
+                  />
+                  <div
+                    *ngIf="localidad.get('capacidadMaxima')?.invalid"
+                    class="text-danger"
+                  >
+                    La Capacidad debe ser de al menos 2
+                  </div>
+                </div>
+                <!-- Campo Cantidad de Entradas -->
+                <div class="col">
+                  <label for="entradasRestantes-{{ i }}" class="form-label"
+                    >Entradas</label
+                  >
+                  <input
+                    type="number"
+                    id="entradasRestantes-{{ i }}"
+                    class="form-control"
+                    formControlName="entradasRestantes"
+                  />
+                  <div
+                    *ngIf="
+                      localidad
+                        .get('entradasRestantes')
+                        ?.hasError('capacidadExcedida')
+                    "
+                    class="text-danger"
+                  >
+                    Las entradas restantes no pueden superar la capacidad
+                    máxima.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botón para eliminar la localidad específica -->
+              <button
+                type="button"
+                class="btn btn-danger mt-2"
+                (click)="eliminarLocalidad(i)"
+              >
+                Eliminar Localidad
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button *ngIf="!modoEdicion" type="submit" class="btn btn-primary">
+          Crear Evento
+        </button>
+        <button *ngIf="modoEdicion" type="submit" class="btn btn-warning">
+          Editar Evento
+        </button>
+
+        <jjwins-alert-messages></jjwins-alert-messages>
+      </form>
     </div>
   </div>
+</div>

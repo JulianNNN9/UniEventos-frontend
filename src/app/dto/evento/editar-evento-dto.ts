@@ -4,6 +4,7 @@ export interface EditarEventoDTO {
   direccionEvento: string;
   ciudadEvento: string;
   descripcionEvento: string;
+  tipoEvento: string;
   fechaEvento: string; // Usamos string para representar la fecha en formato ISO
   localidades: any[]; // Todo: Definir tipo de dato
   imagenPortada: string;

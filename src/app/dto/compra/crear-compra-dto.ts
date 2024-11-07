@@ -1,5 +1,8 @@
+import { InformacionCompraDTO } from "./informacion-compra-dto";
+import { InformacionItemCompraDTO } from "./informacion-item-compra-dto";
+
 export interface CrearCompraDTO {
   idUsuario:string,
-  itemsCompra:any, // Todo: Definir tipo de dato para itemsCompra
+  informacionItemCompraDTOS:InformacionItemCompraDTO[], // Todo: Definir tipo de dato para itemsCompra
   codigoCupon?:string
 }

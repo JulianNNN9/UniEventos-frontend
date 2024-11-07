@@ -39,16 +39,19 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
       this.publicoService.iniciarSesion(this.loginForm.value).subscribe({
         next: (data) => {
           Swal.fire({
-            title: 'Inicio de Sesion',
-            text: 'Ha iniciado sesion correctamente',
+            title: 'Inicio de Sesión',
+            text: 'Ha iniciado sesión correctamente',
             icon: 'success',
             confirmButtonText: 'Aceptar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Aquí se ejecuta el método login después de que el usuario presiona "Aceptar"
+              this.tokenService.login(data.respuesta.token);
+            }
           });
-          this.tokenService.login(data.respuesta.token)
         },
         error: (error) => {
           Swal.fire({
@@ -59,11 +62,12 @@ export class LoginComponent {
           }).then((result) => {
             if (result.isConfirmed && error.error.respuesta === 'Esta cuenta aún no ha sido activada') {
               this.router.navigate(['/activar-cuenta']);
-            }});
+            }
+          });
         },
       });
     } else {
-      this.alertMessageService.show('Formulario Invalido', {
+      this.alertMessageService.show('Formulario Inválido', {
         cssClass: 'alerts-error',
         timeOut: 3000,
       });

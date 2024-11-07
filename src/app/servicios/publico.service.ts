@@ -11,6 +11,7 @@ import { FiltrosEventosDTO } from '../dto/filtros-evento-dto';
 import { NotificacionEventoDTO } from '../dto/evento/notificacion-evento-dto';
 import { RecuperarContraseniaDTO } from '../dto/cuenta/recuperar-contrasenia-dto';
 import { ActivarCuentaDTO } from '../dto/cuenta/activar-cuenta-dto';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +19,19 @@ import { ActivarCuentaDTO } from '../dto/cuenta/activar-cuenta-dto';
 export class PublicoService {
   private authURL = 'http://localhost:8080/api/publico';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService
+  ) {}
 
+  //LISTO
   public crearUsuario(cuentaDTO: CrearUsuarioDTO): Observable<MensajeDTO<String>> {
     return this.http.post<MensajeDTO<String>>(
       `${this.authURL}/crear-usuario`,
       cuentaDTO
     );
   }
+    //LISTO
   public iniciarSesion(loginDTO: LoginDTO): Observable<MensajeDTO<TokenDTO>> {
     return this.http.post<MensajeDTO<TokenDTO>>(
       `${this.authURL}/iniciar-sesion`,
@@ -38,9 +44,15 @@ export class PublicoService {
     );
   }
 
-  public filtrarEvento(filtrosEventos: FiltrosEventosDTO): Observable<MensajeDTO<ItemEventoDTO[]>> {
+  public filtrarEventoItem(filtrosEventos: FiltrosEventosDTO): Observable<MensajeDTO<ItemEventoDTO[]>> {
     return this.http.post<MensajeDTO<ItemEventoDTO[]>>(
-      `${this.authURL}/eventos/filtrar-evento`,
+      `${this.authURL}/eventos/filtrar-evento-item`,
+      filtrosEventos
+    );
+  }
+  public filtrarEventoInfo(filtrosEventos: FiltrosEventosDTO): Observable<MensajeDTO<InformacionEventoDTO[]>> {
+    return this.http.post<MensajeDTO<InformacionEventoDTO[]>>(
+      `${this.authURL}/eventos/filtrar-evento-info`,
       filtrosEventos
     );
   }
@@ -51,9 +63,44 @@ export class PublicoService {
     );
   }
 
-  public listarEventos(): Observable<MensajeDTO<ItemEventoDTO[]>> {
+  public listarEventosPaginadosItem(pagina: number, tamano: number): Observable<MensajeDTO<ItemEventoDTO[]>> {
+    const params = new HttpParams()
+      .set('pagina', pagina)
+      .set('tamano', tamano);  // Añade el tamaño como parámetro
+    
     return this.http.get<MensajeDTO<ItemEventoDTO[]>>(
+      `${this.authURL}/eventos/listar-eventos-paginados-item`,
+      { params }
+    );
+  }
+  public listarEventosPaginadosInfo(pagina: number, tamano: number): Observable<MensajeDTO<InformacionEventoDTO[]>> {
+    const params = new HttpParams()
+      .set('pagina', pagina)
+      .set('tamano', tamano);  // Añade el tamaño como parámetro
+    
+    return this.http.get<MensajeDTO<InformacionEventoDTO[]>>(
+      `${this.authURL}/eventos/listar-eventos-paginados-info`,
+      { params }
+    );
+  }
+  public listarEventos(): Observable<MensajeDTO<InformacionEventoDTO[]>> {
+    return this.http.get<MensajeDTO<InformacionEventoDTO[]>>(
       `${this.authURL}/eventos/listar-eventos`
+    );
+  }
+  public listarCiudades(): Observable<MensajeDTO<string[]>> {
+    return this.http.get<MensajeDTO<string[]>>(
+      `${this.authURL}/eventos/listar-ciudades`
+    );
+  }
+  public listarTipoEventos(): Observable<MensajeDTO<string[]>> {
+    return this.http.get<MensajeDTO<string[]>>(
+      `${this.authURL}/eventos/listar-tipo-eventos`
+    );
+  }
+  public listarEstadoEventos(): Observable<MensajeDTO<string[]>> {
+    return this.http.get<MensajeDTO<string[]>>(
+      `${this.authURL}/eventos/listar-estado-eventos`
     );
   }
 

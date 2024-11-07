@@ -39,13 +39,26 @@ export class RegistroComponent {
   ) {}
 
   public registrar(clienteForm: NgForm) {
-    const { value, valid } = clienteForm;
-
+    const { value, valid, controls } = clienteForm;
     if (!valid) {
+      // Crear un array para almacenar los campos inválidos
+      const camposInvalidos = [];
+
+      // Iterar sobre los controles del formulario
+      for (const controlName in controls) {
+        if (controls[controlName].invalid) {
+          camposInvalidos.push(controlName);
+        }
+      }
+
+      // Mostrar un mensaje de error con los campos inválidos
       this.alertMessageService.show(
-        'Por favor llena el formulario correctamente',
-        { cssClass: 'alerts-error', timeOut: 3000 }
+        `Por favor llena el formulario correctamente. Campos inválidos: ${camposInvalidos.join(
+          ', '
+        )}`,
+        { cssClass: 'alerts-error', timeOut: 4000 }
       );
+      return;
     } else {
       this.publicoService.crearUsuario(value).subscribe({
         next: (data) => {

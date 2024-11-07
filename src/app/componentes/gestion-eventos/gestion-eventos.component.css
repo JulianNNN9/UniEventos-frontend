@@ -1,0 +1,34 @@
+.elemento_eliminar {
+    float: left;
+}
+
+.elemento_eliminar--btn {
+    font-size: 22px; /* Tamaño de fuente del botón de eliminar */
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambia el cursor a puntero */
+    display: inline-block; /* Muestra como elemento en línea */
+    vertical-align: middle; /* Alineación vertical al medio */
+    line-height: 1; /* Altura de línea */
+    display: none; /* Oculto por defecto */
+}
+
+.elemento_eliminar--btn:focus { 
+    outline: none; /* Sin contorno al enfocar */
+}
+
+.elemento_eliminar--btn:active { 
+    transform: translateY(2px); /* Movimiento al hacer clic */
+}
+
+.elemento:hover .elemento_eliminar--btn { 
+    display: block; /* Muestra el botón al pasar el ratón */
+}
+
+.elemento:hover .elemento_valor { 
+    transform: translateX(-20px); /* Desplaza el valor a la izquierda al pasar el ratón */
+}
+
+.elemento:hover .elemento_porcentaje { 
+    transform: translateX(-20px); /* Desplaza el porcentaje a la izquierda al pasar el ratón */
+}

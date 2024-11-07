@@ -1,28 +1,92 @@
 <div class="container">
+  <div *ngIf="isCliente(); else notCliente">
     <div class="block-heading">
-      <h2>Carrito de Compras</h2>
+      <div class="mt-3">
+        <i class="fas fa-shopping-cart fa-3x mr-3"></i>
+        <h2 class="d-inline-block">Carrito de Compras</h2>
+      </div>
       <p>Estos son los eventos que has seleccionado para tu compra.</p>
     </div>
     <div class="content">
       <div class="row">
         <div class="col-md-12 col-lg-8">
           <div class="items">
-            <div *ngFor="let evento of carrito" class="product">
+            <div *ngFor="let detalleCarrito of detalleCarritos" class="product">
               <div class="row">
                 <div class="col-md-3">
-                  <img class="img-fluid mx-auto d-block image" [src]="evento.imagenPortada" alt="{{ evento.nombre }}">
+                  <img
+                    class="img-fluid mx-auto d-block image"
+                    [src]="detalleCarrito.evento.imagenPortada"
+                    alt="{{ detalleCarrito.evento.nombreEvento }}"
+                  />
                 </div>
                 <div class="col-md-9">
                   <div class="info">
-                    <h5>{{ evento.nombre }}</h5>
-                    <p>{{ evento.descripcion }}</p>
+                    <h5>{{ detalleCarrito.evento.nombreEvento }}</h5>
+                    <p>{{ detalleCarrito.evento.descripcionEvento }}</p>
+                    <div class="price-container">
+                      <div class="price">
+                        Precio:
+                        <span class="value">{{
+                          detalleCarrito.precioLocalidad
+                            | currency : "MXN" : "$" : "1.2-2"
+                        }}</span>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-md-6">
-                        <div>Tipo: <span class="value">{{ evento.tipo }}</span></div>
-                        <div>Fecha: <span class="value">{{ evento.fecha | date:'short' }}</span></div>
-                        <div>Dirección: <span class="value">{{ evento.direccion }}</span></div>
-                        <div>Ciudad: <span class="value">{{ evento.ciudad }}</span></div>
+                        <div>
+                          Tipo:
+                          <span class="value">{{
+                            detalleCarrito.evento.tipoEvento
+                          }}</span>
+                        </div>
+                        <div>
+                          Fecha:
+                          <span class="value">{{
+                            detalleCarrito.evento.fechaEvento | date : "short"
+                          }}</span>
+                        </div>
+                        <div>
+                          Dirección:
+                          <span class="value">{{
+                            detalleCarrito.evento.direccionEvento
+                          }}</span>
+                        </div>
+                        <div>
+                          Ciudad:
+                          <span class="value">{{
+                            detalleCarrito.evento.ciudadEvento
+                          }}</span>
+                        </div>
+                        <div>
+                          Cantidad:
+                          <span class="value">{{
+                            detalleCarrito.cantidad
+                          }}</span>
+                          <button (click)="cambiarCantidad(detalleCarrito, 1)">
+                            +
+                          </button>
+                          <button (click)="cambiarCantidad(detalleCarrito, -1)">
+                            -
+                          </button>
+                        </div>
+                        <div>
+                          Localidad:
+                          <span class="value">{{
+                            detalleCarrito.nombreLocalidad
+                          }}</span>
+                        </div>
                       </div>
+                    </div>
+                    <!-- Agregar el enlace para eliminar el item con el icono de basura -->
+                    <div class="remove-item">
+                      <a
+                        href="javascript:void(0)"
+                        (click)="eliminarCarrito(detalleCarrito)"
+                      >
+                        <i class="fas fa-trash-alt text-danger"></i> Eliminar
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -35,30 +99,88 @@
             <h3>Resumen</h3>
             <div class="summary-item">
               <span class="text">Subtotal</span>
-              <span class="price">{{ subtotal | currency }}</span>
+              <span class="price">{{
+                calcularSubtotal() | currency : "MNX" : "$" : "1.2-2"
+              }}</span>
             </div>
             <div class="summary-item">
               <span class="text">Descuento</span>
-              <span class="price">{{ descuento | currency }}</span>
+              <span class="price">{{ calcularDescuento() | currency }}</span>
             </div>
             <div class="summary-item">
               <span class="text">Envío</span>
-              <span class="price">{{ envio | currency }}</span>
+              <span class="price">{{ calcularEnvio() | currency }}</span>
             </div>
             <div class="summary-item">
               <span class="text">Total</span>
-              <span class="price">{{ total | currency }}</span>
+              <span class="price">{{ calcularTotal() | currency }}</span>
             </div>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Código de cupón" [(ngModel)]="codigoCupon">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" (click)="validarCupon()">Validar</button>
+              <input
+              type="text"
+              class="form-control"
+              placeholder="Código de cupón"
+              [(ngModel)]="codigoCupon"
+              required
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                (click)="validarCupon()"
+                [disabled]="!codigoCupon || codigoCupon.trim().length === 0"
+              >
+                Validar
+              </button>
+            </div>
+            </div>
+            <!-- Mostrar cupón validado -->
+            <div *ngIf="informacionCuponDTO" class="coupon-info mt-3 p-2 mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>Cupón Aplicado:</strong>
+                  {{ informacionCuponDTO.codigo }} -
+                  {{ informacionCuponDTO.porcentajeDescuento }}%
+                </div>
+                <button
+                  class="btn btn-outline-danger btn-sm"
+                  (click)="eliminarCupon()"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
               </div>
             </div>
-            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="realizarPago()">Realizar Pago</button>
+            <jjwins-alert-messages></jjwins-alert-messages>
+            <button
+              type="button"
+              class="btn btn-primary btn-lg btn-block"
+              (click)="procesarPago()"
+            >
+              Proceder con el Pago
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
+
+<!-- Si no es cliente -->
+<ng-template #notCliente>
+  <!-- Carrito vacío, icono y título alineados a la izquierda -->
+  <div class="mt-3">
+    <i class="fas fa-shopping-cart fa-3x mr-3"></i>
+    <!-- Icono grande -->
+    <h2 class="d-inline-block">Carrito vacío</h2>
+  </div>
+
+  <!-- Alerta con mensaje para iniciar sesión o registrarse -->
+  <div class="alert alert-warning text-center mt-4">
+    <h4>
+      ¡Para agregar eventos al carrito, por favor inicia sesión o regístrate!
+    </h4>
+    <div class="mt-3 py-3">
+      <a class="btn btn-primary" routerLink="/login">Iniciar sesión</a>
+      <a class="btn btn-secondary ml-2" routerLink="/registro">Registrarse</a>
+    </div>
+  </div>
+</ng-template>

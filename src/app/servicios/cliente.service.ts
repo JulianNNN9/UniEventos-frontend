@@ -11,6 +11,7 @@ import { AgregarItemDTO } from '../dto/carrito/agregar-item-dto';
 import { EliminarDelCarritoDTO } from '../dto/carrito/eliminar-del-carrito-dto';
 import { EditarCarritoDTO } from '../dto/carrito/editar-carrito-dto';
 import { InformacionCarritoDTO } from '../dto/carrito/informacion-carrito-dto';
+import { InformacionCuponDTO } from '../dto/cupon/informacion-cupon-dto';
 
 
 @Injectable({
@@ -79,6 +80,9 @@ export class ClienteService {
 
   public obtenerCarrito(idUsuario: string): Observable<MensajeDTO<InformacionCarritoDTO>> {
     return this.http.get<MensajeDTO<InformacionCarritoDTO>>(`${this.authURL}/carrito/obtener-carrito/${idUsuario}`);
+  }
+  public validarCupon(codigoCupon: string, idUsuario: string): Observable<MensajeDTO<InformacionCuponDTO>> {
+    return this.http.get<MensajeDTO<InformacionCuponDTO>>(`${this.authURL}/carrito/validar-cupon/${codigoCupon}/${idUsuario}`);
   }
 
   public vaciarCarrito(idUsuario: string): Observable<MensajeDTO<string>> {

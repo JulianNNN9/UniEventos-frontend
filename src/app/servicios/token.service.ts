@@ -27,7 +27,9 @@ export class TokenService {
 
   public login(token: string) {
     this.setToken(token);
-    this.router.navigate(['/']);
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
   }
 
   public logout() {
@@ -65,5 +67,4 @@ export class TokenService {
     }
     return '';
   }
-  
 }

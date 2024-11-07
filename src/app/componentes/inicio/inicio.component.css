@@ -1,0 +1,15 @@
+.card {
+    border: none; /* Elimina el borde de la tarjeta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade una sombra sutil para destacar las tarjetas */
+    transition: transform 0.2s; /* Añade un efecto de transición al pasar el mouse */
+    height: 100%; /* Hace que la tarjeta ocupe toda la altura del contenedor */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Escala la tarjeta al pasar el mouse */
+  }
+  
+  .card-img-top {
+    height: 200px; /* Ajusta la altura de la imagen */
+    object-fit: cover; /* Mantiene la proporción de la imagen y la recorta si es necesario */
+  }
