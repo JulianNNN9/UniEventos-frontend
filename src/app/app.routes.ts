@@ -14,6 +14,7 @@ import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta
 import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 import { DetalleCompraComponent } from './componentes/detalle-compra/detalle-compra.component';
+import { GestionCuponesComponent } from './componentes/gestion-cupones/gestion-cupones.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
@@ -30,5 +31,6 @@ export const routes: Routes = [
    { path: 'carrito-compras', component: CarritoComprasComponent},
    { path: 'editar-cuenta/:id', component: EditarCuentaComponent},
    { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent},
+   { path: 'gestion-cupones', component: GestionCuponesComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];
