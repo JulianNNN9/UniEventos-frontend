@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EventoDTO } from '../dto/evento/evento-dto';
 import { AgregarItemDTO } from '../dto/carrito/agregar-item-dto';
 import { ClienteService } from './cliente.service';
 import { InformacionCarritoDTO } from '../dto/carrito/informacion-carrito-dto';
@@ -52,10 +51,7 @@ export class CarritoService {
   obtenerCarrito(): Observable<MensajeDTO<InformacionCarritoDTO>> {
     return this.clienteService.obtenerCarrito(this.tokenService.getIDCuenta());
   }
-
-  // Método para recorrer los items de DetalleCarritoDTO y crear la compra
   crearCompra(idUsuario: string, informacionCuponDTO: InformacionCuponDTO | null=null): Observable<MensajeDTO<string>> {
-    // Convertir cada DetalleCarritoDTO a InformacionItemCompraDTO
     let codigoCupon: string = '';
     if(informacionCuponDTO != null){
       codigoCupon = informacionCuponDTO.codigo;
@@ -66,15 +62,11 @@ export class CarritoService {
       cantidad: detalle.cantidad,
       precioUnitario: detalle.precioLocalidad
     }));
-
-    // Crear el objeto DTO para la compra
     const crearCompraDTO: CrearCompraDTO = {
       idUsuario: idUsuario,
       informacionItemCompraDTOS: itemsCompra,
       codigoCupon: codigoCupon
     };
-
-    // Llamada al servicio para crear la compra
     return this.clienteService.crearCompra(crearCompraDTO);
   }
 

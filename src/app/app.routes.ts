@@ -17,25 +17,29 @@ import { DetalleCompraComponent } from './componentes/detalle-compra/detalle-com
 import { GestionCuponesComponent } from './componentes/gestion-cupones/gestion-cupones.component';
 import { CrearCuponComponent } from './componentes/crear-cupon/crear-cupon.component';
 import { HistorialComprasComponent } from './componentes/historial-compras/historial-compras.component';
+import { OlvidarContraseniaComponent } from './componentes/olvidar-contrasenia/olvidar-contrasenia.component';
+import { LoginGuard } from './guardianes/login.guard';
+import { AuthAdminClienteGuard } from './guardianes/auth-admin-cliente.guard';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
-   { path: 'login', component: LoginComponent },
-   { path: 'activar-cuenta', component: ActivarCuentaComponent },
-   { path: 'registro', component: RegistroComponent },
-   { path: 'crear-evento', component: CrearEventoComponent},
+   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
+   { path: 'activar-cuenta', component: ActivarCuentaComponent, canActivate: [LoginGuard] },
+   { path: 'registro', component: RegistroComponent , canActivate: [LoginGuard]},
+   { path: 'crear-evento', component: CrearEventoComponent, canActivate: [AuthAdminGuard] },
    { path: 'header', component: HeaderComponent},
    { path: 'footer', component: FooterComponent},
-   { path: "gestion-eventos", component: GestionEventosComponent},
+   { path: "gestion-eventos", component: GestionEventosComponent, canActivate: [AuthAdminGuard] },
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
-   { path: 'editar-evento/:id', component: CrearEventoComponent},
-   { path: "gestion-cupones", component: GestionCuponesComponent},
-   { path: 'crear-cupon', component: CrearCuponComponent},
-   { path: 'editar-cupon/:id', component: CrearCuponComponent},
+   { path: 'editar-evento/:id', component: CrearEventoComponent, canActivate: [AuthAdminGuard] },
+   { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [AuthAdminGuard]},
+   { path: 'crear-cupon', component: CrearCuponComponent, canActivate: [AuthAdminGuard]},
+   { path: 'editar-cupon/:id', component: CrearCuponComponent, canActivate: [AuthAdminGuard]},
    { path: 'carrito-compras', component: CarritoComprasComponent},
-   { path: 'detalle-compra/:id', component: DetalleCompraComponent },
-   { path: 'historial-compras', component: HistorialComprasComponent },
-   { path: 'editar-cuenta/:id', component: EditarCuentaComponent},
-   { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent},
+   { path: 'detalle-compra/:id', component: DetalleCompraComponent, canActivate: [AuthClienteGuard] },
+   { path: 'historial-compras', component: HistorialComprasComponent, canActivate: [AuthClienteGuard] },
+   { path: 'editar-cuenta/:id', component: EditarCuentaComponent, canActivate: [AuthAdminClienteGuard]},
+   { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent, canActivate: [AuthAdminClienteGuard]},
+   { path: 'olvidar-contrasenia', component: OlvidarContraseniaComponent, canActivate: [LoginGuard]},
    { path: "**", pathMatch: "full", redirectTo: "" }
 ];

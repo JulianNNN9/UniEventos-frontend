@@ -9,6 +9,9 @@ import { EditarCuponDTO } from '../dto/cupon/editar-cupon-dto';
 import { CuponDTO } from '../dto/cupon/cupon-dto';
 import { EliminarEventosDTO } from '../dto/evento/eliminar-eventos-dto';
 import { EliminarCuponesDTO } from '../dto/cupon/eliminar-cupones-dto';
+import { InformacionUsuarioDTO } from '../dto/cuenta/informacion-usuario-dto';
+import { EditarUsuarioDTO } from '../dto/cuenta/editar-usuario-dto';
+import { CambiarContraseniaDTO } from '../dto/cuenta/cambiar-contrasenia-dto';
 @Injectable({
   providedIn: 'root'
 })
@@ -84,5 +87,14 @@ export class AdminService {
       `${this.authURL}/imagenes/eliminar-imagen`,
       { params }
     );
+  }
+  public obtenerInformacionUsuarioAdmin(codigo: string): Observable<MensajeDTO<InformacionUsuarioDTO>> {
+    return this.http.get<MensajeDTO<InformacionUsuarioDTO>>(`${this.authURL}/obtener-usuario/${codigo}`);
+  }
+  public editarUsuarioAdmin(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(`${this.authURL}/editar-perfil`, editarUsuarioDTO);
+  }
+  public cambiarContraseniaAdmin(cambiarContraseniaDTO: CambiarContraseniaDTO): Observable<MensajeDTO<string>> {
+    return this.http.put<MensajeDTO<string>>(`${this.authURL}/cambiar-contrasenia`, cambiarContraseniaDTO);
   }
 }

@@ -38,7 +38,6 @@ export class InicioComponent {
       .subscribe((eventos: MensajeDTO<ItemEventoDTO[]>) => {
         this.eventos = eventos.respuesta;
         this.hayMasEventos = eventos.respuesta.length > 0; // Verifica si hay eventos
-        this.eventosService.setEventos(eventos.respuesta);
       });
   }
   cargarTipoEventos() {

@@ -5,6 +5,9 @@ import { AlertMessagesModule, AlertMessagesService } from 'jjwins-angular-alert-
 import { CambiarContraseniaDTO } from '../../dto/cuenta/cambiar-contrasenia-dto';
 import { ClienteService } from '../../servicios/cliente.service';
 import { CommonModule } from '@angular/common';
+import { TokenService } from '../../servicios/token.service';
+import { AdminService } from '../../servicios/admin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cambiar-contrasenia',
@@ -16,6 +19,7 @@ import { CommonModule } from '@angular/common';
 export class CambiarContraseniaComponent {
 
   contrasenia: CambiarContraseniaDTO = {
+    idUsuario: '',
     contraseniaAntigua: '',
     contraseniaNueva: '',
     confirmarContraseniaNueva: ''
@@ -24,14 +28,16 @@ export class CambiarContraseniaComponent {
   @ViewChild('cambiarContraseniaForm') cambiarContraseniaForm: NgForm;
 
   constructor(
+    private router: Router,
+    private tokenService: TokenService,
     private cuentaService: ClienteService,
+    private adminService: AdminService,
     private alertMessageService: AlertMessagesService
   ) {}
 
   public cambiarContrasenia(cambiarContraseniaForm: NgForm) {
     const { value, valid } = cambiarContraseniaForm;
 
-    // Validación adicional para confirmar que las contraseñas coinciden
     if (value.contraseniaNueva !== value.confirmarContraseniaNueva) {
       this.alertMessageService.show('Las contraseñas no coinciden',
         { cssClass: 'alerts-error', timeOut: 3000 }
@@ -44,25 +50,61 @@ export class CambiarContraseniaComponent {
         { cssClass: 'alerts-error', timeOut: 3000 }
       );
     } else {
-      this.cuentaService.cambiarContrasenia(value).subscribe({
-        next: () => {
-          Swal.fire({
-            title: 'Contraseña actualizada',
-            text: 'La contraseña ha sido cambiada correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          });
-        },
-        error: (error) => {
-          Swal.fire({
-            title: 'Error',
-            text: error.error.respuesta || 'Hubo un error al cambiar la contraseña',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-          });
-        },
-      });
-      this.cambiarContraseniaForm.resetForm();
+      this.cambiarContraseniaForm.value.idUsuario = this.tokenService.getIDCuenta();
+      if (this.isCliente()) {
+        this.cuentaService.cambiarContrasenia(value).subscribe({
+          next: (data) => {
+            Swal.fire({
+              title: 'Contraseña actualizada',
+              text: data.respuesta,
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }).then(() => {
+              this.router.navigate([`/editar-cuenta/${this.tokenService.getIDCuenta()}`]);
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              title: 'Error',
+              text: error.error.respuesta || 'Hubo un error al cambiar la contraseña',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+            });
+          },
+        });
+        this.cambiarContraseniaForm.resetForm();
+      } else if (this.isAdmin()) {
+        this.adminService.cambiarContraseniaAdmin(value).subscribe({
+          next: (data) => {
+            Swal.fire({
+              title: 'Contraseña actualizada',
+              text: data.respuesta,
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }).then(() => {
+              this.router.navigate([`/editar-cuenta/${this.tokenService.getIDCuenta()}`]);
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              title: 'Error',
+              text: error.error.respuesta || 'Hubo un error al cambiar la contraseña',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+            });
+          },
+        });
+        this.cambiarContraseniaForm.resetForm();
+      }
     }
+  }
+  isLogged() {
+    return this.tokenService.isLogged();
+  }
+  isCliente(){
+    return this.isLogged() && this.tokenService.getRol() === 'CLIENTE';
+  }
+  isAdmin(){
+    return this.isLogged() && this.tokenService.getRol() === 'ADMINISTRADOR';
   }
 }

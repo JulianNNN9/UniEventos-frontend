@@ -8,9 +8,17 @@
       <p><strong>Fecha de Compra:</strong> {{ compra.fechaCompra | date: 'longDate' }}</p>
       <p><strong>Total:</strong> {{ compra.total | currency }}</p>
       <p><strong>Cupón Aplicado:</strong> {{ compra.codigoCupon || 'No aplicó' }}</p>
-      <p><strong>Estado:</strong> {{ compra.estadoCompra }}</p>
+      <p><strong>Estado:</strong> 
+        <span [ngClass]="{
+          'text-success': estadoCompra === 'COMPLETADA',
+          'text-danger': estadoCompra === 'ERROR',
+          'text-warning': estadoCompra === 'PENDIENTE'
+        }">
+          {{ estadoCompra }}
+        </span>
+      </p>
 
-      <h5 class="mt-4">Items en la Compra</h5>
+      <h4 class="mt-4">Items en la Compra</h4>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -23,7 +31,6 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of compra.informacionItemCompraDTOS">
-            <!-- Mostrar imagen del evento si está disponible -->
             <td>
               <img *ngIf="imagenesEventos[item.idEvento]" 
                    [src]="imagenesEventos[item.idEvento]" 
@@ -43,8 +50,21 @@
       <button class="btn btn-primary btn-lg" (click)="realizarPago()">
         Realizar Pago con Mercado Pago
       </button>
+      <button class="btn btn-danger btn-lg" (click)="confirmarCancelacion()">
+        Cancelar Compra
+      </button>
     </div>
   </div>
+</div>
+
+<div *ngIf="compraConfirmada" class="alert alert-success text-center" role="alert">
+  <h4 class="alert-heading">Compra Confirmada</h4>
+  <p>Tu compra ha sido completada exitosamente. ¡Gracias por tu compra!</p>
+</div>
+
+<div *ngIf="error" class="alert alert-danger text-center" role="alert">
+  <h4 class="alert-heading">Error en la compra</h4>
+  <p>{{ error }}</p>
 </div>
 
 <div *ngIf="!compra.id || !isAutorizado" class="alert alert-danger text-center" role="alert">

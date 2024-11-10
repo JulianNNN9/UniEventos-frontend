@@ -9,6 +9,8 @@ import { TokenService } from '../../servicios/token.service';
 import { EventosService } from '../../servicios/eventos.service';
 import { MensajeDTO } from '../../dto/mensaje-dto';
 import { InformacionEventoDTO } from '../../dto/evento/informacion-evento-dto';
+import { ClienteService } from '../../servicios/cliente.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle-compra',
@@ -21,12 +23,15 @@ export class DetalleCompraComponent {
   compra: InformacionCompraDTO;
   imagenesEventos: { [idEvento: string]: string } = {}; // Almacenar URLs de imagen de portada por idEvento
   isAutorizado: boolean = false;
+  compraConfirmada: boolean = false;  // Estado de la compra (Confirmada)
+  error: string = '';  // Mensaje de error
+  estadoCompra: string = ''; // Estado inicial
 
   constructor(
     private route: ActivatedRoute,
     private detalleCompraService: DetalleCompraService,
     private tokenService: TokenService,
-    private eventoService: EventosService // Agregar el servicio de eventos para obtener la imagen
+    private eventoService: EventosService,
   ) {
     this.compra = {
       id: '',
@@ -46,6 +51,15 @@ export class DetalleCompraComponent {
       const idCompra = params['id'];
       this.obtenerCompra(idCompra);
     });
+
+    // Verificar parámetros de la URL (en caso de que Mercado Pago redirija después de una notificación)
+    this.route.queryParams.subscribe(params => {
+      const collectionStatus = params['collection_status'];
+      const paymentId = params['payment_id'];
+      if (collectionStatus && paymentId) {
+        this.actualizarEstadoCompra(collectionStatus);
+      }
+    });
   }
 
   obtenerCompra(idOrden: string): void {
@@ -56,6 +70,7 @@ export class DetalleCompraComponent {
         if (this.isCliente() && this.tokenService.getIDCuenta() === this.compra.idUsuario) {
           this.isAutorizado = true;
         }
+        this.estadoCompra = this.compra.estadoCompra;
       },
       error: (err) => {
         console.error('Error al obtener la compra:', err);
@@ -78,6 +93,20 @@ export class DetalleCompraComponent {
     });
   }
 
+  actualizarEstadoCompra(collectionStatus: string): void {
+    if (collectionStatus === 'approved') {
+      this.estadoCompra = 'COMPLETADA';
+      this.compraConfirmada = true;
+      this.error = ''; // Limpiar cualquier mensaje de error previo
+    } else if (collectionStatus === 'rejected') {
+      this.estadoCompra = 'RECHAZADA';
+      this.error = 'La compra ha sido rechazada. Intenta nuevamente.';
+    } else {
+      this.estadoCompra = 'PENDIENTE';
+      this.error = 'La compra está pendiente de confirmación.';
+    }
+  }
+
   isLogged() {
     return this.tokenService.isLogged();
   }
@@ -87,7 +116,7 @@ export class DetalleCompraComponent {
   }
 
   isPendiente() {
-    return this.compra.id ? this.compra.estadoCompra === 'PENDIENTE' : false;
+    return this.compra.id ? this.estadoCompra === 'PENDIENTE' : false;
   }
 
   realizarPago(): void {
@@ -100,6 +129,43 @@ export class DetalleCompraComponent {
       }
     }, error => {
       console.error('Error al realizar el pago:', error);
+    });
+  }
+  confirmarCancelacion(): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas cancelar esta compra?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'No, mantener compra'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cancelarCompra();
+      }
+    });
+  }
+  
+  cancelarCompra(): void {
+    this.detalleCompraService.cancelarCompra(this.compra.id).subscribe({
+      next: (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Compra cancelada',
+          text: response.respuesta,
+          confirmButtonText: 'Aceptar'
+        });
+        this.compra.estadoCompra = 'CANCELADA';
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al cancelar la compra',
+          text: error.error.respuesta,
+          confirmButtonText: 'Aceptar'
+        });
+        console.error('Error al cancelar la compra:', error);
+      }
     });
   }
 }
