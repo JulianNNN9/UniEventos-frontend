@@ -20,6 +20,11 @@ import { usuarioInterceptor } from './interceptor/usuario.interceptor';
 import { AuthService } from './servicios/auth.service';
 import { NotificacionService } from './servicios/notificacion.service';
 import { DetalleCompraService } from './servicios/detalle-compra.service';
+import { GestionCuponesService } from './servicios/gestion-cupones.service';
+import { CrearCuponService } from './servicios/crear-cupon.service';
+import { HistorialComprasService } from './servicios/historial-compra.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AuthAdminClienteGuard } from './guardianes/auth-admin-cliente.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,6 +38,9 @@ export const appConfig: ApplicationConfig = {
     CrearEventoService,
     CarritoService,
     DetalleCompraService,
+    GestionCuponesService,
+    CrearCuponService,
+    HistorialComprasService,
     TokenService,
     AdminService,
     PublicoService,
@@ -42,6 +50,7 @@ export const appConfig: ApplicationConfig = {
     AlertMessagesService,
     AuthAdminGuard,
     AuthClienteGuard,
-    LoginGuard
+    AuthAdminClienteGuard,
+    LoginGuard, provideAnimationsAsync()
   ]
 };

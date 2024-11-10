@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { PublicoService } from '../../servicios/publico.service';
 import { AlertMessagesService } from 'jjwins-angular-alert-messages';
 import { AlertMessagesModule } from 'jjwins-angular-alert-messages';
@@ -17,7 +17,7 @@ import { ActivarCuentaComponent } from "../activar-cuenta/activar-cuenta.compone
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AlertMessagesModule],
+  imports: [FormsModule, ReactiveFormsModule, AlertMessagesModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })

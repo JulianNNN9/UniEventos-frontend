@@ -88,4 +88,7 @@ export class ClienteService {
   public vaciarCarrito(idUsuario: string): Observable<MensajeDTO<string>> {
     return this.http.post<MensajeDTO<string>>(`${this.authURL}/carrito/vaciar-carrito/${idUsuario}`, {});
   }
+  verificarEstadoCompra(idCompra: string): Observable<any> {
+    return this.http.get<any>(`${this.authURL}/${idCompra}/estado`);
+  }
 }

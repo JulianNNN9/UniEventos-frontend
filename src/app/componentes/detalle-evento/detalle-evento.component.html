@@ -16,7 +16,7 @@
       <p class="card-text"><strong>Ciudad:</strong> {{ evento.ciudadEvento }}</p>
       <p class="card-text"><strong>Estado:</strong> {{ evento.estadoEvento }}</p>
     
-      <h5 class="mt-4">Localidades</h5>
+      <h4 class="mt-4">Localidades</h4>
       <div *ngIf="evento.localidades.length > 0; else noLocalidades">
         <table class="table table-bordered">
           <thead>
@@ -54,7 +54,7 @@
         <p>No hay localidades disponibles para este evento.</p>
       </ng-template>
     
-      <h5 class="mt-4">Imagenes Localidades</h5>
+      <h4 class="mt-4">Imagenes Localidades</h4>
     </div>
     
     <div class="card-footer text-muted text-center">

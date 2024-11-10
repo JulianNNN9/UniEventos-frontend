@@ -1,4 +1,5 @@
 export interface CuponDTO {
+  id: string;
   codigo: string;
   nombre: string;
   porcentajeDescuento: number;

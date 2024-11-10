@@ -53,6 +53,12 @@ export class HeaderComponent {
     }
     return false;
   }
+  isCliente(){
+    if(this.isAutenticado() && this.tokenService.getRol() === 'CLIENTE'){
+      return true;
+    }
+    return false;
+  }
   obtenerNotificaciones() {
     this.publicoService.notificarNuevoEvento().subscribe((eventos: MensajeDTO<NotificacionEventoDTO[]>) => {
       this.notificaciones = eventos.respuesta;
@@ -61,13 +67,14 @@ export class HeaderComponent {
   }
 
   mostrarNotificaciones() {
-    // Cambiamos el valor de modalVisible para abrir el modal
     this.modalVisible = true;
   }
 
   cerrarModal() {
-    // Cerramos el modal cuando el usuario haga clic en "Cerrar"
     this.modalVisible = false;
+  }
+  getIdUsuario(): string {
+    return this.tokenService.getIDCuenta();
   }
 
 

@@ -12,6 +12,7 @@ import { NotificacionEventoDTO } from '../dto/evento/notificacion-evento-dto';
 import { RecuperarContraseniaDTO } from '../dto/cuenta/recuperar-contrasenia-dto';
 import { ActivarCuentaDTO } from '../dto/cuenta/activar-cuenta-dto';
 import { TokenService } from './token.service';
+import { CuponDTO } from '../dto/cupon/cupon-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -83,6 +84,7 @@ export class PublicoService {
       { params }
     );
   }
+
   public listarEventos(): Observable<MensajeDTO<InformacionEventoDTO[]>> {
     return this.http.get<MensajeDTO<InformacionEventoDTO[]>>(
       `${this.authURL}/eventos/listar-eventos`
@@ -101,6 +103,26 @@ export class PublicoService {
   public listarEstadoEventos(): Observable<MensajeDTO<string[]>> {
     return this.http.get<MensajeDTO<string[]>>(
       `${this.authURL}/eventos/listar-estado-eventos`
+    );
+  }
+  public obtenerCupon(idCupon: string): Observable<MensajeDTO<CuponDTO>> {
+    return this.http.get<MensajeDTO<CuponDTO>>(
+      `${this.authURL}/cupon/obtener-cupon/${idCupon}`
+    );
+  }
+  public listarCupones(): Observable<MensajeDTO<CuponDTO[]>> {
+    return this.http.get<MensajeDTO<CuponDTO[]>>(
+      `${this.authURL}/cupon/listar-cupones`
+    );
+  }
+  public listarTipoCupones(): Observable<MensajeDTO<string[]>> {
+    return this.http.get<MensajeDTO<string[]>>(
+      `${this.authURL}/cupon/listar-tipo-cupones`
+    );
+  }
+  public listarEstadoCupones(): Observable<MensajeDTO<string[]>> {
+    return this.http.get<MensajeDTO<string[]>>(
+      `${this.authURL}/cupon/listar-estado-cupones`
     );
   }
 

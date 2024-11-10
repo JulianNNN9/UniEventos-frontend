@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import { EventoDTO } from '../dto/evento/evento-dto';
 import { PublicoService } from './publico.service';
 import { Observable } from 'rxjs';
 import { MensajeDTO } from '../dto/mensaje-dto';
-import { ItemEventoDTO } from '../dto/evento/item-evento-dto';
-import { CrearEventoDTO } from '../dto/evento/crear-evento-dto';
-import { EditarEventoDTO } from '../dto/evento/editar-evento-dto';
 import { InformacionEventoDTO } from '../dto/evento/informacion-evento-dto';
 import { AdminService } from './admin.service';
 import { FiltrosEventosDTO } from '../dto/filtros-evento-dto';
@@ -35,16 +31,6 @@ export class GestionEventosService {
   }
   public filtrarEventosInfo(filtrosEventosDTO: FiltrosEventosDTO): Observable<MensajeDTO<InformacionEventoDTO[]>> {
     return this.publicService.filtrarEventoInfo(filtrosEventosDTO);
-  }
-
-  crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO<string>> {
-    return this.adminService.crearEvento(crearEventoDTO);
-  }
-  obtenerEvento(index: string): Observable<MensajeDTO<InformacionEventoDTO>> {
-    return this.publicService.obtenerInformacionEvento(index);
-  }
-  editarEvento(editarEventoDTO: EditarEventoDTO): Observable<MensajeDTO<string>> {
-    return this.adminService.editarEvento(editarEventoDTO);
   }
   eliminarEvento(evento: InformacionEventoDTO): Observable<MensajeDTO<string>> {
     const indice: number = this.eventos.indexOf(evento);

@@ -1,44 +1,72 @@
-<div *ngIf="compra.id && isAutorizado" class="container mt-5 d-flex justify-content-center align-items-center">
-    <div class="card" style="width: 70%;">
-      <div class="card-header text-center">
-        <h3>Detalle de Compra</h3>
-      </div>
-      <div class="card-body">
-        <p><strong>ID de Compra:</strong> {{ compra.id }}</p>
-        <p><strong>Fecha de Compra:</strong> {{ compra.fechaCompra | date: 'longDate' }}</p>
-        <p><strong>Total:</strong> {{ compra.total | currency }}</p>
-        <p><strong>Cupón Aplicado:</strong> {{ compra.codigoCupon || 'No aplicó' }}</p>
-        <p><strong>Estado:</strong> {{ compra.estadoCompra }}</p>
-  
-        <h5 class="mt-4">Items en la Compra</h5>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-              <th>Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of compra.informacionItemCompraDTOS">
-              <td>{{ item.nombreLocalidad }}</td>
-              <td>{{ item.cantidad }}</td>
-              <td>{{ item.precioUnitario | currency }}</td>
-              <td>{{ item.cantidad * item.precioUnitario | currency }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <div *ngIf="isPendiente()" class="card-footer text-center">
-        <button class="btn btn-primary btn-lg" (click)="realizarPago()">
-          Realizar Pago con Mercado Pago
-        </button>
-      </div>
+<div *ngIf="compra.id && isAutorizado" class="container mt-5">
+  <div class="card" style="width: 70%; margin: auto;">
+    <div class="card-header text-center">
+      <h3>Detalle de Compra</h3>
     </div>
-    
+    <div class="card-body">
+      <p><strong>ID de Compra:</strong> {{ compra.id }}</p>
+      <p><strong>Fecha de Compra:</strong> {{ compra.fechaCompra | date: 'longDate' }}</p>
+      <p><strong>Total:</strong> {{ compra.total | currency }}</p>
+      <p><strong>Cupón Aplicado:</strong> {{ compra.codigoCupon || 'No aplicó' }}</p>
+      <p><strong>Estado:</strong> 
+        <span [ngClass]="{
+          'text-success': estadoCompra === 'COMPLETADA',
+          'text-danger': estadoCompra === 'ERROR',
+          'text-warning': estadoCompra === 'PENDIENTE'
+        }">
+          {{ estadoCompra }}
+        </span>
+      </p>
+
+      <h4 class="mt-4">Items en la Compra</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of compra.informacionItemCompraDTOS">
+            <td>
+              <img *ngIf="imagenesEventos[item.idEvento]" 
+                   [src]="imagenesEventos[item.idEvento]" 
+                   alt="Imagen de Portada" 
+                   class="imagen-portada">
+            </td>
+            <td>{{ item.nombreLocalidad }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ item.precioUnitario | currency }}</td>
+            <td>{{ item.cantidad * item.precioUnitario | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="isPendiente()" class="card-footer text-center">
+      <button class="btn btn-primary btn-lg" (click)="realizarPago()">
+        Realizar Pago con Mercado Pago
+      </button>
+      <button class="btn btn-danger btn-lg" (click)="confirmarCancelacion()">
+        Cancelar Compra
+      </button>
+    </div>
+  </div>
 </div>
+
+<div *ngIf="compraConfirmada" class="alert alert-success text-center" role="alert">
+  <h4 class="alert-heading">Compra Confirmada</h4>
+  <p>Tu compra ha sido completada exitosamente. ¡Gracias por tu compra!</p>
+</div>
+
+<div *ngIf="error" class="alert alert-danger text-center" role="alert">
+  <h4 class="alert-heading">Error en la compra</h4>
+  <p>{{ error }}</p>
+</div>
+
 <div *ngIf="!compra.id || !isAutorizado" class="alert alert-danger text-center" role="alert">
   <h4 class="alert-heading">Compra no encontrada</h4>
   <p>No hemos podido encontrar los detalles de la compra. Por favor, verifique el ID de la compra o intente nuevamente.</p>
