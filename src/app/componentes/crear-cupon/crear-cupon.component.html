@@ -1,0 +1,154 @@
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card" style="width: 50%">
+    <div class="card-header p-4">
+      <h5 class="mb-0">
+        <i class="fa-solid fa-ticket me-3"></i>Crear Nuevo Cupón
+      </h5>
+    </div>
+    <div class="card-body p-4">
+      <form [formGroup]="crearCuponForm" (ngSubmit)="crearCupon()">
+        <!-- Nombre del Cupón -->
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre del Cupón</label>
+          <input
+            type="text"
+            id="nombre"
+            class="form-control"
+            formControlName="nombre"
+          />
+          <div
+            *ngIf="
+              crearCuponForm.get('nombre')?.invalid &&
+              crearCuponForm.get('nombre')?.touched
+            "
+            class="text-danger"
+          >
+            Nombre del cupón requerido
+          </div>
+        </div>
+        <!-- Código del Cupón -->
+        <div class="mb-3">
+          <label for="codigo" class="form-label">Código del Cupón</label>
+          <input
+            type="text"
+            id="codigo"
+            class="form-control"
+            formControlName="codigo"
+          />
+          <div
+            *ngIf="
+              crearCuponForm.get('codigo')?.invalid &&
+              crearCuponForm.get('codigo')?.touched
+            "
+            class="text-danger"
+          >
+            Código del cupón requerido
+          </div>
+        </div>
+
+        <!-- Porcentaje de Descuento -->
+        <div class="mb-3">
+          <label for="porcentajeDescuento" class="form-label"
+            >Descuento (%)</label
+          >
+          <input
+            type="number"
+            id="porcentajeDescuento"
+            class="form-control"
+            formControlName="porcentajeDescuento"
+            min="1"
+            max="100"
+          />
+          <div
+            *ngIf="
+              crearCuponForm.get('porcentajeDescuento')?.invalid &&
+              crearCuponForm.get('porcentajeDescuento')?.touched
+            "
+            class="text-danger"
+          >
+            El descuento debe ser un valor entre 1 y 100
+          </div>
+        </div>
+        <!-- Selector para Estado de Cupon -->
+        <div *ngIf="modoEdicion" class="mb-3">
+          <label for="estadoCupon" class="form-label">Estado del Cupon</label>
+          <select
+            id="estadoCupon"
+            class="form-control"
+            formControlName="estadoCupon"
+          >
+            <option value="">Seleccione un Estado</option>
+            <option *ngFor="let estado of estadosCupon" [value]="estado">
+              {{ estado }}
+            </option>
+          </select>
+        </div>
+        <!-- Selector para Tipo de Cupon -->
+        <div class="mb-3">
+          <label for="tipoCupon" class="form-label">Tipo de Cupon</label>
+          <select
+            id="tipoCupon"
+            class="form-control"
+            formControlName="tipoCupon"
+          >
+            <option value="">Seleccione un tipo</option>
+            <option *ngFor="let tipo of tiposCupon" [value]="tipo">
+              {{ tipo }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              crearCuponForm.get('tipoCupon')?.invalid &&
+              crearCuponForm.get('tipoCupon')?.touched
+            "
+            class="text-danger"
+          >
+            Tipo de Evento Requerido
+          </div>
+        </div>
+        <!-- Fecha de Expiración -->
+        <div class="mb-3">
+          <label for="fechaVencimiento" class="form-label"
+            >Fecha de Expiración</label
+          >
+          <input
+            type="date"
+            id="fechaVencimiento"
+            class="form-control"
+            formControlName="fechaVencimiento"
+          />
+          <div
+            *ngIf="
+              crearCuponForm.get('fechaVencimiento')?.invalid &&
+              crearCuponForm.get('fechaVencimiento')?.touched
+            "
+            class="text-danger"
+          >
+            Fecha de expiración requerida
+          </div>
+        </div>
+
+        <!-- Botón de Enviar -->
+        <div *ngIf="!modoEdicion" class="d-flex justify-content-end">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="crearCuponForm.invalid"
+          >
+            Crear Cupón
+          </button>
+        </div>
+        <!-- Botón de Enviar -->
+        <div *ngIf="modoEdicion" class="d-flex justify-content-end">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            [disabled]="crearCuponForm.invalid"
+          >
+            Editar Cupón
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

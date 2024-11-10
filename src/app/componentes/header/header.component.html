@@ -85,7 +85,7 @@
 <!-- Modal de Notificaciones -->
 <div *ngIf="modalVisible" class="modal fade show" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true" style="display: block;">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content custom-modal">
       <div class="modal-header">
         <h5 class="modal-title" id="notificationsModalLabel">Notificaciones de Eventos</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cerrarModal()"></button>
@@ -99,18 +99,11 @@
 
               <!-- Contenido de la notificación -->
               <div>
-                <h6><strong>Nombre:</strong> {{ notificacion.nombreEvento }}</h6>
+                <h4><strong>Nombre:</strong> {{ notificacion.nombreEvento }}</h4>
                 <p><strong>Fecha:</strong> {{ notificacion.fechaEvento | date:'short' }}</p>
                 <p><strong>Descripcion:</strong> {{ notificacion.descripcionEvento | slice:0:100 }}...</p>
                 <p><strong>Ubicación:</strong> {{ notificacion.ciudadEvento }}</p>
-                <a
-                [routerLink]="['/detalle-evento', notificacion._id]"
-                class="btn btn-info btn-sm"
-                (click)="cerrarModal()"
-
-              >
-                Detalle
-              </a>
+                <a [routerLink]="['/detalle-evento', notificacion._id]" class="btn btn-info btn-sm" (click)="cerrarModal()">Detalle</a>
               </div>
             </li>
           </ul>

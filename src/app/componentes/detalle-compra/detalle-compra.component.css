@@ -1,0 +1,12 @@
+.imagen-portada {
+    max-width: 100px; /* Limitar el tamaño máximo */
+    height: auto; /* Mantener la proporción de la imagen */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  .card-body table td img {
+    width: 80px; /* Ajustar el tamaño en la tabla */
+    height: auto;
+    object-fit: cover; /* Cubrir la celda sin distorsionar la imagen */
+  }

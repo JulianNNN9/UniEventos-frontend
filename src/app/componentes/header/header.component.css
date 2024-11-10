@@ -1,0 +1,55 @@
+/* Fondo del modal */
+.custom-modal {
+    background-color: powderblue; /* Fondo suave */
+    border-radius: 8px;
+  }
+  
+  /* Cabecera del modal */
+  .modal-header {
+    background-color: #b0c4de; /* Azul claro */
+    color: #2f4f4f; /* Gris oscuro para contraste */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  /* Footer del modal */
+  .modal-footer {
+    background-color: #b0c4de; /* Fondo a juego con la cabecera */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  /* Lista de notificaciones */
+  .list-group-item {
+    background-color: #e6f0fa; /* Fondo azul muy claro */
+    border: 1px solid #d1e7f1; /* Borde suave */
+    border-radius: 6px;
+    margin-bottom: 8px;
+    padding: 10px;
+    color: #2f4f4f; /* Color del texto */
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Imagen de portada de la notificación */
+  .list-group-item img {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Texto y contenido de la notificación */
+  .list-group-item h4 {
+    color: #004d40; /* Verde oscuro para el título */
+    margin: 0;
+    font-size: 1.1em;
+  }
+  
+  .list-group-item p {
+    margin: 4px 0;
+  }
+  
+  .list-group-item a {
+    color: #ffffff;
+    background-color: #4682b4; /* Azul acero */
+    border-color: #4682b4;
+  }

@@ -14,6 +14,9 @@ import { EditarCuentaComponent } from './componentes/editar-cuenta/editar-cuenta
 import { CambiarContraseniaComponent } from './componentes/cambiar-contrasenia/cambiar-contrasenia.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 import { DetalleCompraComponent } from './componentes/detalle-compra/detalle-compra.component';
+import { GestionCuponesComponent } from './componentes/gestion-cupones/gestion-cupones.component';
+import { CrearCuponComponent } from './componentes/crear-cupon/crear-cupon.component';
+import { HistorialComprasComponent } from './componentes/historial-compras/historial-compras.component';
 
 export const routes: Routes = [
    { path: '', component: InicioComponent },
@@ -25,9 +28,13 @@ export const routes: Routes = [
    { path: 'footer', component: FooterComponent},
    { path: "gestion-eventos", component: GestionEventosComponent},
    { path: 'detalle-evento/:id', component: DetalleEventoComponent },
-   { path: 'detalle-compra/:id', component: DetalleCompraComponent },
    { path: 'editar-evento/:id', component: CrearEventoComponent},
+   { path: "gestion-cupones", component: GestionCuponesComponent},
+   { path: 'crear-cupon', component: CrearCuponComponent},
+   { path: 'editar-cupon/:id', component: CrearCuponComponent},
    { path: 'carrito-compras', component: CarritoComprasComponent},
+   { path: 'detalle-compra/:id', component: DetalleCompraComponent },
+   { path: 'historial-compras', component: HistorialComprasComponent },
    { path: 'editar-cuenta/:id', component: EditarCuentaComponent},
    { path: 'cambiar-contrasenia', component: CambiarContraseniaComponent},
    { path: "**", pathMatch: "full", redirectTo: "" }

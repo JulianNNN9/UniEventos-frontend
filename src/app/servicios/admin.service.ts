@@ -8,6 +8,7 @@ import { CrearCuponDTO } from '../dto/cupon/crear-cupon-dto';
 import { EditarCuponDTO } from '../dto/cupon/editar-cupon-dto';
 import { CuponDTO } from '../dto/cupon/cupon-dto';
 import { EliminarEventosDTO } from '../dto/evento/eliminar-eventos-dto';
+import { EliminarCuponesDTO } from '../dto/cupon/eliminar-cupones-dto';
 @Injectable({
   providedIn: 'root'
 })
@@ -70,18 +71,18 @@ export class AdminService {
       `${this.authURL}/cupon/eliminar-cupon/${idCupon}`
     );
   }
+  public eliminarCupones(eliminarCuponesDTO: EliminarCuponesDTO): Observable<MensajeDTO<string>> {
+    return this.http.post<MensajeDTO<string>>(
+      `${this.authURL}/cupon/eliminar-cupones`,
+      eliminarCuponesDTO
+    );
+  }
 
   public eliminarImagen(idImagen: string): Observable<MensajeDTO<string>> {
     const params = new HttpParams().set('idImagen', idImagen);
     return this.http.delete<MensajeDTO<string>>(
       `${this.authURL}/imagenes/eliminar-imagen`,
       { params }
-    );
-  }
-
-  public listarCupones(): Observable<MensajeDTO<CuponDTO[]>> {
-    return this.http.get<MensajeDTO<CuponDTO[]>>(
-      `${this.authURL}/cupon/listar-cupones`
     );
   }
 }

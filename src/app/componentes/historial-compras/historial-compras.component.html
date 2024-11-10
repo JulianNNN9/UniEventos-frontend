@@ -1,0 +1,45 @@
+<div class="historial-compras">
+  <h2>Historial de Compras</h2>
+  
+  <div *ngIf="compras?.length; else noCompras">
+    <mat-card *ngFor="let compra of compras" class="compra-card">
+      <div class="compra-header">
+        <h3>Compra ID: {{ compra.id }}</h3>
+        <button mat-icon-button color="primary" (click)="verDetalle(compra.id)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </div>
+      
+      <p><strong>Fecha de Compra:</strong> {{ compra.fechaCompra | date: 'long' }}</p>
+      <p><strong>Total:</strong> {{ compra.total | currency }}</p>
+      <p><strong>Estado:</strong> {{ compra.estadoCompra }}</p>
+      
+      <h4>Items Comprados</h4>
+      <mat-divider></mat-divider>
+      
+      <div *ngFor="let item of compra.informacionItemCompraDTOS" class="compra-item">
+        <!-- Mostrar la imagen de portada del evento si está disponible -->
+        <img *ngIf="imagenesEventos[item.idEvento]" [src]="imagenesEventos[item.idEvento]" alt="Imagen de Portada" class="imagen-portada">
+        
+        <div class="item-detail">
+          <p><strong>Evento:</strong> {{ item.idEvento }}</p>
+          <p><strong>Localidad:</strong> {{ item.nombreLocalidad }}</p>
+        </div>
+        <div class="item-quantity">
+          <p><strong>Cantidad:</strong> {{ item.cantidad }}</p>
+          <p><strong>Precio Unitario:</strong> {{ item.precioUnitario | currency }}</p>
+        </div>
+      </div>
+      
+      <div class="compra-footer">
+        <button mat-button color="primary" (click)="verDetalle(compra.id)">
+          Ver Detalle
+        </button>
+      </div>
+    </mat-card>
+  </div>
+
+  <ng-template #noCompras>
+    <p>No hay compras registradas.</p>
+  </ng-template>
+</div>
