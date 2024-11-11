@@ -17,7 +17,7 @@ import { CambiarContraseniaDTO } from '../dto/cuenta/cambiar-contrasenia-dto';
 })
 export class AdminService {
 
-  private authURL = 'http://localhost:8080/api/admin';
+  private authURL = 'https://unieventos-frontend.onrender.com/api/admin';
 
   constructor(private http: HttpClient) {}
   public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO<string>> {

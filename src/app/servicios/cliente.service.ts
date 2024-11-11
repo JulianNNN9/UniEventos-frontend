@@ -19,7 +19,7 @@ import { InformacionCuponDTO } from '../dto/cupon/informacion-cupon-dto';
 })
 export class ClienteService {
 
-  private authURL = 'http://localhost:8080/api/usuario';
+  private authURL = 'https://unieventos-frontend.onrender.com/api/usuario';
 
   constructor(private http: HttpClient) {}
   public editarUsuario(editarUsuarioDTO: EditarUsuarioDTO): Observable<MensajeDTO<string>> {

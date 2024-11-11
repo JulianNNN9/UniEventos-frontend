@@ -18,7 +18,7 @@ import { CuponDTO } from '../dto/cupon/cupon-dto';
   providedIn: 'root',
 })
 export class PublicoService {
-  private authURL = 'http://localhost:8080/api/publico';
+  private authURL = 'https://unieventos-frontend.onrender.com/api/publico';
 
   constructor(
     private http: HttpClient,
