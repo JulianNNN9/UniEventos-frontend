@@ -155,7 +155,7 @@ export class DetalleCompraComponent {
           text: response.respuesta,
           confirmButtonText: 'Aceptar'
         });
-        this.compra.estadoCompra = 'CANCELADA';
+        this.estadoCompra = 'CANCELADA';
       },
       error: (error) => {
         Swal.fire({
